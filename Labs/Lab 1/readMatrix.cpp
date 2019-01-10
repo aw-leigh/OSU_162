@@ -3,6 +3,7 @@
 ** Date: Jan 10, 2019
 ** Description: Prompts user to input integers to fill the matrix in MatrixCalculator
 *********************************************************************/
+#include <iostream>
 #include "readMatrix.hpp"
 
 void readMatrix(int** matrix, int size)

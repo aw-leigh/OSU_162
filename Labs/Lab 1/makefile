@@ -1,4 +1,4 @@
-MatrixCalculator: MatrixCalculator.cpp readMatrix.cpp determinant.cpp
-	g++ -o MatrixCalculator MatrixCalculator.cpp readMatrix.cpp determinant.cpp
+main: main.cpp readMatrix.cpp determinant.cpp
+	g++ -o main main.cpp readMatrix.cpp determinant.cpp
 clean:
-	rm MatrixCalculator
+	rm main
