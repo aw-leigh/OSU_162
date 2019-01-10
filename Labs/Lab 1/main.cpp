@@ -44,7 +44,12 @@ int main()
 
     cout << endl << "The determinant of the matrix is: " << determinant(matrix, matrix_size) << endl;
 
+    for (int i = 0; i < matrix_size; i++)
+    {
+        delete [] matrix[i];
+    }
     delete [] matrix;
+
     return 0;
 }
 
