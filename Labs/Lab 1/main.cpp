@@ -6,6 +6,7 @@
 ** then displays both the matrix and the determinant
 *********************************************************************/
 #include <iostream>
+#include <iomanip> //setw
 #include "readMatrix.hpp"
 #include "determinant.hpp"
 
@@ -74,7 +75,7 @@ void printMatrix(int **array_in, int size)
     {
         for(int j = 0; j < size; j++)
         {
-            cout << array_in[i][j];
+            cout << std::setw(3) << array_in[i][j] << " ";
         }
         cout << endl;
     }

@@ -26,7 +26,7 @@ void readMatrix(int** matrix, int size)
 
 void validateInput(int &input)
 {
-	while (!std::cin)
+	while (!std::cin || std::cin.get()!= '\n')
 	{
 		std::cin.clear();  //Clear bad input flag
 		std::cin.ignore(1000, '\n');  //Discard input
