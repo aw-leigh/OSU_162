@@ -22,12 +22,12 @@ using std::string;
 
 int main()
 {
-    std::ifstream inputFile;    //file stream objects (for reading file)
-        std::ofstream outputFile;   //file stream objects (for writing file)
+    std::ifstream inputFile;    //file stream object for reading file
+    std::ofstream outputFile;   //file stream object for writing file
     string fileName;            //Holds the user entered filename
-    int integerCount[26] = {0};  //array to hold letter counts, initialized to 0
+    int letterCount[26] = {0};  //array to hold letter counts, initialized to 0
 
-    cout << "Please enter your filename." << endl;
+    cout << "Please enter your filename: ";
     cin >> fileName;
 
     //Attempts to open the input file.
@@ -41,11 +41,11 @@ int main()
 
     while(inputFile) //read through to the end of the file
     {
-
+        countLetters(inputFile, letterCount);
+        outputLetters(outputFile, letterCount);
     }
     
     inputFile.close();
-    
     return 0;
 }
 
@@ -57,9 +57,9 @@ TODO:
 ✓    Read the file chosen by the user
 ✓    continue counting letters until the EOF (end of file) character
 
-    For each paragraph in the input file, the program should count the frequency of each letters
-    ask user what filename to output to
-    then proceed to output the frequencies to the file
+✓    For each paragraph in the input file, the program should count the frequency of each letters
+✓    ask user what filename to output to
+✓    then proceed to output the frequencies to the file
     (the paragraphs are separated by newline characters.)
     (Each paragraph should have its own output file)
 

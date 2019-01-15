@@ -15,7 +15,20 @@
 
 #include "outputLetters.hpp"
 
-void outputLetters(std::ofstream outputFile, int* intArray[])
+void outputLetters(std::ofstream& outputFile, int* intArray)
 {
+    std::string outputFileName;
     
+    std::cout << "Please enter your output filename: ";
+    std::cin >> outputFileName;
+
+    outputFile.open(outputFileName);
+    //need to test how to add txt as needed
+
+    for(int i = 0; i < 26; i++)  //26 because we are couting just the 26 letters
+    {
+        outputFile << (char)(i+97) << ": " << intArray[i] << std::endl;
+    }
+    
+    outputFile.close();
 }

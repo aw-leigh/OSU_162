@@ -13,6 +13,6 @@
 #ifndef OUTPUTLETTERS_HPP
 #define OUTPUTLETTERS_HPP
 
-void outputLetters(std::ofstream outputFile, int* intArray[]);
+void outputLetters(std::ofstream& outputFile, int* intArray);
 
 #endif
