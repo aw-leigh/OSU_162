@@ -1,7 +1,7 @@
-objects = main.o countLetters.o outputLetters.o
+objects = main.o countLetters.o outputLetters.o appendTxt.o
 
-main: $(objects)
-	g++ -g -o main $(objects)
+LetterCounter: $(objects)
+	g++ -g -o LetterCounter $(objects)
 
 main.o: main.cpp
 	g++ -c main.cpp
@@ -12,6 +12,9 @@ countLetters.o: countLetters.cpp countLetters.hpp
 outputLetters.o: outputLetters.cpp outputLetters.hpp
 	g++ -c outputLetters.cpp
 
+appendTxt.o: appendTxt.cpp appendTxt.hpp
+	g++ -c appendTxt.cpp
+
 .PHONY : clean
 clean:
-	rm main $(objects)
+	rm LetterCounter $(objects)

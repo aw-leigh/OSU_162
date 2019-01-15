@@ -6,14 +6,12 @@
 **              counts the frequency of letters in each paragraph and outputs the results
 **              into user specified named files.
 *********************************************************************/
-
 #include <iostream>
 #include <string>
 #include <fstream>
-
 #include "countLetters.hpp"
 #include "outputLetters.hpp"
-
+#include "appendTxt.hpp"
 
 using std::cin;
 using std::cout;
@@ -27,19 +25,18 @@ int main()
     string fileName;            //Holds the user entered filename
     int letterCount[26] = {0};  //array to hold letter counts, initialized to 0
 
-    cout << "Please enter your filename: ";
+    cout << "Please enter name of text file to import: ";
     cin >> fileName;
-
-    //Attempts to open the input file.
-    //Displays an error and exits program if the file isn't openable.
+    appendTxt(fileName);  //searches a string for ".txt", and appends it if missing. See appendTxt.cpp
+    
     inputFile.open(fileName);
-    if (!inputFile)
+    if (!inputFile)  //Displays an error and exits program if the file isn't openable.
     {
         cout << "Could not access file, check filename and run program again" << endl;
         return 1;
     }
 
-    while(inputFile) //read through to the end of the file
+    while(inputFile.good()) //read through to the end of the file
     {
         countLetters(inputFile, letterCount);
         outputLetters(outputFile, letterCount);
@@ -60,27 +57,4 @@ TODO:
 ✓    For each paragraph in the input file, the program should count the frequency of each letters
 ✓    ask user what filename to output to
 ✓    then proceed to output the frequencies to the file
-    (the paragraphs are separated by newline characters.)
-    (Each paragraph should have its own output file)
-
-    ((The letter counting disregards the upper/lower case differences.))
-
-
-
-The format of the output file is as follows:
-
-a: 3
-
-b: 0
-
-c: 1
-
-d: 0
-
-……
-
-z: 0
-
-
-
 */
