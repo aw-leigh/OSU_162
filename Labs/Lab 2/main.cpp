@@ -27,7 +27,7 @@ int main()
 
     cout << "Please enter name of text file to import: ";
     cin >> fileName;
-    appendTxt(fileName);  //searches a string for ".txt", and appends it if missing. See appendTxt.cpp
+    appendTxt(fileName);  //searches a string for ".", and if not found appends ".txt". See appendTxt.cpp
     
     inputFile.open(fileName);
     if (!inputFile)  //Displays an error and exits program if the file isn't openable.

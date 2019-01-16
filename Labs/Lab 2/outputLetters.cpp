@@ -21,7 +21,7 @@ void outputLetters(std::ofstream& outputFile, int* intArray)
     
     std::cout << "Please enter name of text file to output: ";
     std::cin >> outputFileName;
-    appendTxt(outputFileName);  //searches a string for ".txt", and appends it if missing. See appendTxt.cpp
+    appendTxt(outputFileName);  //searches a string for ".", and if not found appends ".txt". See appendTxt.cpp
 
     outputFile.open(outputFileName);
     //need to test how to add txt as needed
