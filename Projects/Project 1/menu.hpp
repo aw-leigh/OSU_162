@@ -10,6 +10,5 @@
 int mainMenu();  //displays main menu, validates choice, and returns item number
 void clearScreen();  //clears the screen
 void systemPause();
-void validateMainMenuChoice(int &menuChoice);  //ensures input is an integer
 
 #endif

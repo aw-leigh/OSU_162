@@ -57,7 +57,7 @@ Ant::Ant(int rowsIn, int colsIn, int startRowIn, int startColIn, int numMovesIn)
     antMove(); //moves the ant numMoves number of times, printing the board each time
 }
 
-Ant::~Ant()
+Ant::~Ant()  //frees memory
 {
     for (int i = 0; i < boardRows; i++)
     {
@@ -80,57 +80,45 @@ void Ant::printBoard()
 
 void Ant::antMove()
 {
-    while(numMoves > 0)
+    while(numMoves > 0)  //continue until out of moves
     {
         if(antTile == WHITEANT)
         {
             switch (antDirection)
             {
                 case NORTH: antDirection = EAST;
-                            gameBoard[antRow][antCol] = '#';  //previous space is now black
+                            toggleCurrentSpaceColor(antRow, antCol);  //previous space is now black
                             antCol += 1;  //move one column east
                             boundsCheck(antRow, antCol);  //teleport to other side of board if it's a boundary
+                            tileColorCheck(antRow, antCol);
 
-                            if(gameBoard[antRow][antCol] == '#')  //change tile status if newly occupied tile is black
-                            {
-                                antTile = BLACKANT;
-                            }
                             gameBoard[antRow][antCol] = '*';
                             break;
 
                 case EAST:  antDirection = SOUTH;
-                            gameBoard[antRow][antCol] = '#';  //previous space is now black
-                            antRow += 1;  //move one column south
+                            toggleCurrentSpaceColor(antRow, antCol);
+                            antRow += 1;  //move one row south
                             boundsCheck(antRow, antCol);
+                            tileColorCheck(antRow, antCol);
 
-                            if(gameBoard[antRow][antCol] == '#')  //change tile status if newly occupied tile is black
-                            {
-                                antTile = BLACKANT;
-                            }
                             gameBoard[antRow][antCol] = '*';
                             break;
 
                 case SOUTH: antDirection = WEST;
-                            gameBoard[antRow][antCol] = '#';  //previous space is now black
-                            antCol -= 1;  //move one column south
+                            toggleCurrentSpaceColor(antRow, antCol);
+                            antCol -= 1;  //move one column west
                             boundsCheck(antRow, antCol);
+                            tileColorCheck(antRow, antCol);
 
-                            if(gameBoard[antRow][antCol] == '#')  //change tile status if newly occupied tile is black
-                            {
-                                antTile = BLACKANT;
-                            }
                             gameBoard[antRow][antCol] = '*';
                             break;
 
                 case WEST:  antDirection = NORTH;
-                            gameBoard[antRow][antCol] = '#';
-                            antRow -= 1;
+                            toggleCurrentSpaceColor(antRow, antCol);
+                            antRow -= 1; //move one row north
                             boundsCheck(antRow, antCol);
+                            tileColorCheck(antRow, antCol);
 
-                            if(gameBoard[antRow][antCol] == '#')  //change tile status if newly occupied tile is black
-                            {
-                                antTile = BLACKANT;
-                            }
                             gameBoard[antRow][antCol] = '*';
                             break;
 
@@ -141,75 +129,63 @@ void Ant::antMove()
             switch (antDirection)
             {
                 case NORTH: antDirection = WEST;
-                            gameBoard[antRow][antCol] = ' ';  //previous space is now white
+                            toggleCurrentSpaceColor(antRow, antCol);  //previous space is now white
                             antCol -= 1;  //move one column west
                             boundsCheck(antRow, antCol);  //teleport to other side of board if it's a boundary
+                            tileColorCheck(antRow, antCol);
 
-                            if(gameBoard[antRow][antCol] == ' ')  //change tile status if newly occupied tile is black
-                            {
-                                antTile = WHITEANT;
-                            }
                             gameBoard[antRow][antCol] = '*';
                             break;
 
                 case EAST:  antDirection = NORTH;
-                            gameBoard[antRow][antCol] = ' ';  //previous space is now white
-                            antRow -= 1;  //move one column south
+                            toggleCurrentSpaceColor(antRow, antCol);
+                            antRow -= 1;  //move one row north
                             boundsCheck(antRow, antCol);
+                            tileColorCheck(antRow, antCol);
 
-                            if(gameBoard[antRow][antCol] == ' ')  //change tile status if newly occupied tile is black
-                            {
-                                antTile = WHITEANT;
-                            }
                             gameBoard[antRow][antCol] = '*';
                             break;
 
                 case SOUTH: antDirection = EAST;
-                            gameBoard[antRow][antCol] = ' ';  //previous space is now white
+                            toggleCurrentSpaceColor(antRow, antCol);
                             antCol += 1;  //move one column east
                             boundsCheck(antRow, antCol);
+                            tileColorCheck(antRow, antCol);
 
-                            if(gameBoard[antRow][antCol] == ' ')  //change tile status if newly occupied tile is black
-                            {
-                                antTile = WHITEANT;
-                            }
                             gameBoard[antRow][antCol] = '*';
                             break;
 
                 case WEST:  antDirection = SOUTH;
-                            gameBoard[antRow][antCol] = ' ';  //previous space is now white
+                            toggleCurrentSpaceColor(antRow, antCol);
                             antRow += 1;  //move one row south
                             boundsCheck(antRow, antCol);
-
-                            if(gameBoard[antRow][antCol] == ' ')  //change tile status if newly occupied tile is black
-                            {
-                                antTile = WHITEANT;
-                            }
+                            tileColorCheck(antRow, antCol);
+                            
                             gameBoard[antRow][antCol] = '*';
                             break;
             }
         }
-        //printBoard();
+        printBoard();
         numMoves--;
     }
-    printBoard();
+    //printBoard();  //this prints the final board state, useful for testing
 }
 
 void Ant::boundsCheck(int antRowIn, int antColIn)
 {
-    if(antRow == 0)
+    if(antRow == 0)  //if ant hits top, teleport to bottom
     {
         antRow = boardRows - 2;
     }
-    else if(antRow == boardRows - 1)
+    else if(antRow == boardRows - 1)  //if ant hits bottom, teleport to top
     {
         antRow = 1;
     }
-    else if(antCol == 0)
+    else if(antCol == 0)  //if ant hits left side, teleport to right side
     {
         antCol = boardCols - 2;
     }
-    else if(antCol == boardCols - 1)
+    else if(antCol == boardCols - 1)  //if ant hits right side, teleport to left side
     {
         antCol = 1;
     }
@@ -224,5 +200,17 @@ void Ant::tileColorCheck(int antRowIn, int antColIn)
     else
     {
         antTile = BLACKANT;
+    }
+}
+
+void Ant::toggleCurrentSpaceColor(int antRowIn, int antColIn)
+{
+    if(antTile == BLACKANT)
+    {
+        gameBoard[antRow][antCol] = ' ';
+    }
+    else
+    {
+        gameBoard[antRow][antCol] = '#';
     }
 }

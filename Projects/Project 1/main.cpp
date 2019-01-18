@@ -46,6 +46,7 @@ int main()
     cout << "EXTRA CREDIT: Would you like to use a random starting location?" << endl;
     cout << "1. Yes" << endl;
     cout << "2. No" << endl;
+    cout << "Please Enter 1 or 2: ";
     cin >> randomChoice;
     validateRangedInt(randomChoice, 1, 2);
 
@@ -87,7 +88,7 @@ int main()
     cout << "2. No (end the program)" << endl;
 
     cin >> mainMenuChoice;
-    validateMainMenuChoice(mainMenuChoice);
+    validateMenuChoice(mainMenuChoice, 2);  //2 is the main menu length
         
     }while(mainMenuChoice != 2);
     

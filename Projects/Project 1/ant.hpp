@@ -21,7 +21,8 @@ class Ant
         int boardRows;  //number of rows. Adds 2 to the user input number because of border.
         int boardCols;  //number of columns. Adds 2 to the user input number because of border.
         void boundsCheck(int antRowIn, int antColIn);  //checks if ant is inside bounds during move
-        void tileColorCheck(int antRowIn, int antColIn); //checks tile color of moved spot, updating TileColor as necessary
+        void tileColorCheck(int antRowIn, int antColIn);  //checks tile color of moved spot, updating TileColor as necessary
+        void toggleCurrentSpaceColor(int antRowIn, int antColIn);  //toggles color of board after move
 
     public:
         Ant(int rows, int cols, int startRow, int startCol, int numMoves);  //default constructor that creates array and places ant at user specified location
