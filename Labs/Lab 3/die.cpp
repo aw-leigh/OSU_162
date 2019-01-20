@@ -10,31 +10,36 @@
 
 Die::Die()  //unused default constructor
 {
-    numSides = 1337;
+    this->numSides = 1337;
 }
 Die::Die(int numSides)  //Die constructor
 {
     this->numSides = numSides;
-    isLoaded = false;
+    this->isLoaded = false;
 }
 int Die::getSides()
 {
-    return numSides;
+    return this->numSides;
 }
 bool Die::getLoaded()
 {
-    return isLoaded;
+    return this->isLoaded;
 }
 LoadedDie::LoadedDie(int numSides) : Die(numSides)  //Loaded die constructor
 {
     this->numSides = numSides;
-    isLoaded = true;
+    this->isLoaded = true;
 }
 int Die::rollDie()
 {
-    return ((rand() % numSides) + 50);  //returns a random number between 1 and numSides
+    return ((rand() % numSides) + 1);  //returns a random number between 1 and numSides
 }
-int LoadedDie::rollDie()
+int LoadedDie::rollDie()  //returns a random number between 2 and numSides. All rolls of 1 become numSides.
 {
-    return ((rand() % numSides) + 2);  //returns a random number between 2 and numSides
+    int roll = ((rand() % numSides) + 1);
+    if (roll == 1)
+    {
+        roll = numSides;
+    }
+    return roll;
 }

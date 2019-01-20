@@ -16,14 +16,14 @@ class Die
         Die(int numSides);  //constructor
         int getSides(); //returns the number of sides of the player's die
         bool getLoaded();  //returns true if die is loaded, false if not loaded
-        int rollDie();  //returns a random number between 1 and numSides
+        virtual int rollDie();  //returns a random number between 1 and numSides
 };
 
 class LoadedDie : public Die
 {
     public:
         LoadedDie(int numSides);  //constructor
-        int rollDie();  //returns a random number between 2 and numSides
+        virtual int rollDie();  //returns a random number between 2 and numSides
 };
 
 #endif //Die

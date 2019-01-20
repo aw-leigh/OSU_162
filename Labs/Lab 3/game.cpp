@@ -14,9 +14,9 @@ const int MAIN_MENU_LENGTH = 2;
 
 Game::Game()
 {
-    std::cout << "Hmm\n";
     srand (time(NULL));  //initialize random seed
-    std::cout << "Hmm\n";
+    player1made = false;  //sets flag for player memory allocation
+    player2made = false;
     mainMenu();
 }
 
@@ -57,12 +57,12 @@ void Game::gameSetup()
     std::cout << "1: Loaded      2: Unloaded" << std::endl;
     std::cin >> p2die;
     validateRangedInt(p2die, 1, 2);
-    std::cout << "How many sides on Player 1's die? (1-" << MAX_DIE_SIDES << ")" << std::endl;
+    std::cout << "How many sides on Player 1's die? (2-" << MAX_DIE_SIDES << ")" << std::endl;
     std::cin >> p1sides;
-    validateRangedInt(p1sides, 1, MAX_DIE_SIDES);
-    std::cout << "How many sides on Player 2's die? (1-" << MAX_DIE_SIDES << ")" << std::endl;
+    validateRangedInt(p1sides, 2, MAX_DIE_SIDES);
+    std::cout << "How many sides on Player 2's die? (2-" << MAX_DIE_SIDES << ")" << std::endl;
     std::cin >> p2sides;    
-    validateRangedInt(p2sides, 1, MAX_DIE_SIDES);
+    validateRangedInt(p2sides, 2, MAX_DIE_SIDES);
 
     this->numRounds = numRounds;
     this->p1_score = 0;  //initializes scores to 0
@@ -70,20 +70,24 @@ void Game::gameSetup()
 
     if(p1die == 1)
     {
-        player1 = LoadedDie(p1sides);
+        player1 = new LoadedDie(p1sides);
+        player1made = true;
     }   
     else
     {
-        player1 = Die(p1sides);
+        player1 = new Die(p1sides);
+        player1made = true;
     }
 
     if(p2die == 1)
     {
-        player2 = LoadedDie(p2sides);
+        player2 = new LoadedDie(p2sides);
+        player2made = true;
     }   
     else
     {
-        player2 = Die(p2sides);
+        player2 = new Die(p2sides);
+        player2made = true;
     }
     clearScreen();
     playGame();
@@ -92,13 +96,13 @@ void Game::playGame()
 {
     for(int i = 0; i < numRounds; i++)  //loop for the number of rounds specified
     {
-        int p1roll = player1.rollDie();
-        int p2roll = player2.rollDie();
+        int p1roll = player1->rollDie();
+        int p2roll = player2->rollDie();
         
         std::cout << "Round " << i+1 << std::endl;
 
-        std::cout << "Player 1 is using a " << player1.getSides() << "-sided ";  //report die status
-        if(player1.getLoaded())
+        std::cout << "Player 1 is using a " << player1->getSides() << "-sided ";  //report die status
+        if(player1->getLoaded())
         {
             std::cout << "loaded die" << std::endl;
         }
@@ -106,8 +110,8 @@ void Game::playGame()
         {
             std::cout << "fair die" << std::endl;    
         }
-        std::cout << "Player 2 is using a " << player2.getSides() << "-sided ";  //report die status
-        if(player2.getLoaded())
+        std::cout << "Player 2 is using a " << player2->getSides() << "-sided ";  //report die status
+        if(player2->getLoaded())
         {
             std::cout << "loaded die" << std::endl;
         }
@@ -137,6 +141,21 @@ void Game::playGame()
         std::cout << "The score is now " << p1_score << " : " << p2_score << std::endl << std::endl;
     }
 
+    std::cout << "This final score is " << p1_score << " : " << p2_score << std::endl;
+    
+    if(p1_score > p2_score)
+    {
+        std::cout << "Player 1 wins!" << std::endl;
+    }
+    else if (p1_score < p2_score)
+    {
+        std::cout << "Player 2 wins!" << std::endl;
+    }
+    else
+    {
+        std::cout << "The game is a tie!" << std::endl;
+    }
+
 }
 void Game::clearScreen()
 {
@@ -145,4 +164,16 @@ void Game::clearScreen()
 	#else
 		std::cout << "\033[2J\033[1;1H";
 	#endif
+}
+
+Game::~Game()
+{
+    if(player1made = true)
+    {
+        delete player1;
+    }
+    if(player2made = true)
+    {
+        delete player2;
+    }
 }

@@ -32,6 +32,5 @@ using std::endl;
 int main()
 {
     Game();
-    cout << "Goodbye\n";
     return 0;
 }
