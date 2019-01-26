@@ -9,6 +9,10 @@
 Turtle::Turtle()
 {
     age = 0;
+    cost = 100;
+    litterSize = 10;
+    baseFoodCost = 5;
+    payoff = 5;
 }
 Turtle::Turtle(bool isAdult)
 {
@@ -20,4 +24,8 @@ Turtle::Turtle(bool isAdult)
     {
         age = 0;
     }
+    cost = 100;
+    litterSize = 10;
+    baseFoodCost = 5;
+    payoff = 5;
 }

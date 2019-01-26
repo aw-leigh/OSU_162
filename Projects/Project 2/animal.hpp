@@ -10,13 +10,17 @@
 class Animal
 {   protected:  
         int age;  //stores animal's age in days
-        static const int cost = -666;  //junk value, to be overridden by each animal
-        static const int litterSize = -666;  //junk value, to be overridden by each animal
-        static const int baseFoodCost = -666;  //junk value, to be overridden by each animal
-        static const int payoff = -666;  //junk value, to be overridden by each animal
+        int cost;  //junk value, to be overridden by each animal
+        int litterSize;  //junk value, to be overridden by each animal
+        int baseFoodCost;  //junk value, to be overridden by each animal
+        int payoff;  //junk value, to be overridden by each animal
     public:
         Animal();  //default constructor
-        int getAge();  //returns animal age
+        virtual int getAge();  //returns animal age
+        virtual int getCost();  //returns cost
+        virtual int getLitterSize();  //returns litter size
+        virtual int getBaseFoodCost();  //returns base food cost
+        virtual int getPayoff(); //returns payoff
         void incrementAge();  //adds 1 to animal age
 };
 

@@ -55,3 +55,20 @@ void validateMenuChoice(int &menuChoice, int menuLength)  //assumes menu choices
 		std::cin >> menuChoice;
 	}
 }
+void clearScreen()
+{
+	#ifdef _WIN32
+		std::system("cls");
+	#else
+		//Assume POSIX
+		std::cout << "\033[2J\033[1;1H";
+	#endif
+}
+
+void systemPause()
+{
+	std::cin.clear();
+	std::cin.ignore(1024, '\n');  // Discart old input
+	std::cout << "Press enter to continue...";
+	std::cin.get();  // Proceed after new input from user
+}

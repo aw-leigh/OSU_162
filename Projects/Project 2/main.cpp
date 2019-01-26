@@ -42,6 +42,6 @@ int main()
     validateRangedInt(numTurtles, 1, 2);
 
     Zoo(startingFunds, numTigers, numPenguins, numTurtles);
-
+    cout << "Thanks for playing!" << endl;
     return 0;
 }

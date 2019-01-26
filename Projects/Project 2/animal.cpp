@@ -21,3 +21,19 @@ void Animal::incrementAge()  //adds 1 to animal age
 {
     ++age;
 }
+int Animal::getCost()  //returns cost
+{
+    return cost;
+}
+int Animal::getLitterSize()  //returns litter size
+{
+    return litterSize;
+}
+int Animal::getBaseFoodCost()
+{
+    return baseFoodCost;
+}
+int Animal::getPayoff() //returns payoff
+{
+    return payoff;
+}

@@ -24,17 +24,25 @@ class Zoo
         int penguinArraySize;  //tracks size of penguin array
         int penguinCount;  //tracks number of penguins in zoo
         Turtle** turtleArray;  //pointer to turtle array
-        int turtleArrazySize;  //tracks size of turtle array
-        int tutrleCount;  //tracks number of turtles in zoo
+        int turtleArraySize;  //tracks size of turtle array
+        int turtleCount;  //tracks number of turtles in zoo
     public:
         Zoo();  //default constructor, not used
         Zoo(int startingCash, int numTigers, int numPenguins, int numTurtles);  //constructor to be used to set up game
         ~Zoo();  //destructor that deallocates memory
         void advanceDay();  //ages animals, calculates profit, 
         void randomEvent();  //causes a random event, used in advanceDay()
-        void growArray(Animal * arrayIn, int arraySize); //doubles array length, per specifications
+        //there must be a way to do these 3 in one function but I can't figure it out
+        void growArray(Tiger** &oldArray, int &arraySize); //doubles array length, per specifications
+        void growArray(Penguin** &oldArray, int &arraySize); //doubles array length, per specifications
+        void growArray(Turtle** &oldArray, int &arraySize); //doubles array length, per specifications
+        void purchaseAnimal();  //shows purchase animal menu at the end of the day
         int getPlayerCash();  //returns player's money total
         int getBaseFoodCost();  //returns base food cost. Not yet implemented
+        //takes 3 pointers to arrays and 3 array lengths, returns calcualtes fed cost. Order is tiger, penguin, turtle
+        int calcFeedCost(Tiger** array1, int tigerCount, Penguin** array2, int penguinCount, Turtle** array3, int turtleCount);
+        //takes 3 pointers to arrays and 3 array lengths, returns calcualtes animal revenue. Order is tiger, penguin, turtle
+        int calcDailyRevenue(Tiger** array1, int tigerCount, Penguin** array2, int penguinCount, Turtle** array3, int turtleCount);  
         bool hasAdults(Animal * arrayIn, int arraySize);  //searches animal arrays for adults, returns true if there are adults
 };
 

@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "C:\\Users\\Andrew\\Dropbox\\@OSU\\Term 2\\162\\Projects\\Project 1"
+		},
+		{
+			"path": "C:\\Users\\Andrew\\Dropbox\\@OSU\\Term 1\\161\\Homework\\Week 8"
 		}
 	],
 	"settings": {
@@ -49,7 +52,10 @@
 			"xstddef": "cpp",
 			"xstring": "cpp",
 			"xtr1common": "cpp",
-			"xutility": "cpp"
+			"xutility": "cpp",
+			"cctype": "cpp",
+			"string": "cpp",
+			"tuple": "cpp"
 		}
 	}
 }
