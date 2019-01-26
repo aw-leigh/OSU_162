@@ -9,7 +9,7 @@ void validateInt(int &input)
 	{
 		std::cin.clear();  //Clear bad input flag
 		std::cin.ignore(1000, '\n');  //Discard input
-		std::cout << "Input must be an integer" << std::endl;
+		std::cout << "Input must be an integer: ";
 		std::cin >> input;
 	}
 }
@@ -20,7 +20,7 @@ void validateRangedInt(int &input, int min, int max)
 	{
 		std::cin.clear();  //Clear bad input flag
 		std::cin.ignore(1000, '\n');  //Discard input
-		std::cout << "Input must be an integer between " << min << " and " << max << std::endl;
+		std::cout << "Input must be an integer between " << min << " and " << max << ": ";
 		std::cin >> input;
 	} 
 }
@@ -30,7 +30,7 @@ void validateDouble(double &input)
     {
         std::cin.clear();
         std::cin.ignore(10000,'\n');
-        std::cout << "Input must be a decimal" << std::endl;
+        std::cout << "Input must be a decimal: ";
         std::cin >> input;
     }
 }
@@ -40,7 +40,7 @@ void validateRangedDouble(double &input, double min, double max)
     {
         std::cin.clear();
         std::cin.ignore(10000,'\n');
-        std::cout << "Input must be a decimal between " << min << " and " << max << std::endl;
+        std::cout << "Input must be a decimal between " << min << " and " << max << ": ";
         std::cin >> input;
     }
 }
@@ -51,7 +51,7 @@ void validateMenuChoice(int &menuChoice, int menuLength)  //assumes menu choices
 	{
 		std::cin.clear();
 		std::cin.ignore(1000, '\n');
-		std::cout << "Please enter a number between 1 and " << menuLength << std::endl;
+		std::cout << "Please enter a number between 1 and " << menuLength << ": ";
 		std::cin >> menuChoice;
 	}
 }
