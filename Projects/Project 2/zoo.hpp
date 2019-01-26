@@ -31,7 +31,7 @@ class Zoo
         Zoo(int startingCash, int numTigers, int numPenguins, int numTurtles);  //constructor to be used to set up game
         ~Zoo();  //destructor that deallocates memory
         void advanceDay();  //ages animals, calculates profit, 
-        void randomEvent();  //causes a random event, used in advanceDay()
+        void randomEvent(int & eventBonus);  //causes a random event, used in advanceDay()
         //there must be a way to do these 3 in one function but I can't figure it out
         void growArray(Tiger** &oldArray, int &arraySize); //doubles array length, per specifications
         void growArray(Penguin** &oldArray, int &arraySize); //doubles array length, per specifications

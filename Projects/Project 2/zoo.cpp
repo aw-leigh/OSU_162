@@ -5,6 +5,8 @@
 *********************************************************************/
 #include <iostream>
 #include <iomanip> //setw
+#include <stdlib.h> //rand
+#include <time.h>  //time
 #include "zoo.hpp"
 #include "animal.hpp"
 #include "tiger.hpp"
@@ -18,6 +20,8 @@ Zoo::Zoo()  //default constructor, not used
 }
 Zoo::Zoo(int startingCash, int numTigersStart, int numPenguinsStart, int numTurtlesStart)  //constructor to be used to set up game
 {
+    srand (time(NULL));  //initialize random seed
+    
     playerCash = startingCash;  //sets starting money
     baseFoodCost = 5;  //sets base food cost; not currently implemented
     dayCounter = 0;  //initializes the game at day 0
@@ -60,7 +64,7 @@ Zoo::Zoo(int startingCash, int numTigersStart, int numPenguinsStart, int numTurt
 
 void Zoo::advanceDay()  //ages animals, calculates profit, 
 {
-    int todaysRevenue, todaysFeedCost = 0;
+    int todaysRevenue, todaysFeedCost, eventBonus, keepPlaying = 0;
     
     clearScreen();
     dayCounter++;
@@ -89,10 +93,11 @@ void Zoo::advanceDay()  //ages animals, calculates profit,
     std::cout << "Today's feed cost is: $" << todaysFeedCost << std::endl;
 
     //random event
+    //randomEvent(eventBonus);
     std::cout << "Random event happens here"  << std::endl;
 
     //calculate revenue
-    todaysRevenue = calcDailyRevenue(tigerArray, tigerCount, penguinArray, penguinCount, turtleArray, turtleCount);
+    todaysRevenue = eventBonus + calcDailyRevenue(tigerArray, tigerCount, penguinArray, penguinCount, turtleArray, turtleCount);
 
     std::cout << "Today's revenue is: $" << todaysRevenue << std::endl;
 
@@ -101,22 +106,54 @@ void Zoo::advanceDay()  //ages animals, calculates profit,
     playerCash += (todaysRevenue - todaysFeedCost);
     std::cout << "You have $" << playerCash << " left in the bank." << std::endl << std::endl;
 
-
     //ask player to buy adult animal
     purchaseAnimal();
-
     
     //check if money is 0, if so game over
-    //prompt to keep playing or end the game
-        //if yes, do nothing (loop)
-        //if quit, display goodbye message and money = 0 (because of loop in main)
-    std::cin.clear();
-    std::cin.ignore(10000, '\n');
-    std::cin.get();
+    if(playerCash <= 0){
+        std::cout << "You're bankrupt! Game Over!";
+    }
+    else{
+        std::cout << "Keep playing? (1 = Yes  2 = No): ";
+        std::cin >> keepPlaying;
+        validateRangedInt(keepPlaying, 1, 2);
+        if(keepPlaying == 2)
+        {
+            playerCash = 0;
+            clearScreen();
+        }
+        else
+        {
+            std::cout << "Press Enter to advance a day...";
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+            std::cin.get();
+        }
+    }
 }
-void Zoo::randomEvent()  //causes a random event, used in advanceDay()
+void Zoo::randomEvent(int & eventBonus)  //causes a random event, used in advanceDay()
 {
+    int randomNumber = (rand() % 10) + 1;  //random number from 1-10
+    int animalType = (rand() % 3) + 1;  //random number from 1-3, used to determine which animal was born/died
 
+    if(randomNumber <= 4) //40% chance of nothing
+    {
+        std::cout << "Nothing special happened today." << std::endl;
+    }
+    else if(randomNumber == 5 || randomNumber == 6)  //20% chance of everything else
+    {
+        std::cout << "One of your animals has died :(" << std::endl;
+    }
+    else if(randomNumber == 7 || randomNumber == 8)
+    {
+        std::cout << "Today was particularly busy!" << std::endl;
+        eventBonus += 500; //need to actually write this function
+    }
+    else
+    {
+        std::cout << "A baby was born!" << std::endl;
+    }
+    
 }
 void Zoo::growArray(Tiger** &oldArray, int &arraySize) //doubles array length, per specifications
 {
@@ -245,7 +282,6 @@ void Zoo::purchaseAnimal()
             turtleCount++;      
             std::cout << "You have purchased a turtle!" << std::endl;      
         }
-        
     }
     else
     {
