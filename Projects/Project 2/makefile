@@ -1,34 +1,34 @@
 PROJ = ZooTycoon
-objects = main.o zoo.o animal.o tiger.o penguin.o turtle.o validation.o
 BIN = $(PROJ)
+objects = main.o zoo.o animal.o tiger.o penguin.o turtle.o validation.o
 
 $(BIN): $(objects)
-	@g++ -g -o $(BIN) $(objects)
+	@g++ -g -std=c++11 -o $(BIN) $(objects)
 
 main.o: main.cpp
-	@g++ -c main.cpp
+	@g++ -std=c++11 -c main.cpp
 
 zoo.o: zoo.cpp zoo.hpp
-	@g++ -c zoo.cpp
+	@g++ -std=c++11 -c zoo.cpp
 
 animal.o: animal.cpp animal.hpp
-	@g++ -c animal.cpp
+	@g++ -std=c++11 -c animal.cpp
 
-tiger.o: tiger.cpp
-	@g++ -c tiger.cpp
+tiger.o: tiger.cpp tiger.hpp
+	@g++ -std=c++11 -c tiger.cpp
 
 penguin.o: penguin.cpp penguin.hpp
-	@g++ -c penguin.cpp
+	@g++ -std=c++11 -c penguin.cpp
 
 turtle.o: turtle.cpp turtle.hpp
-	@g++ -c turtle.cpp
+	@g++ -std=c++11 -c turtle.cpp
 
 validation.o: validation.cpp validation.hpp
-	@g++ -c validation.cpp
+	@g++ -std=c++11 -c validation.cpp
 
 .PHONY : valgrind
 valgrind:
-	@valgrind --leak-check=full ./$(BIN)
+	@valgrind --leak-check=full --track-origins=yes ./$(BIN)
 
 .PHONY : zip
 zip:
