@@ -18,7 +18,7 @@ class Game
         int p1_score;  //tracks player 1's score
         int p2_score;  //tracks player 1's score
         int numRounds;  //stores the number of rounds
-        void mainMenu();  //displays main menu
+        int mainMenu();  //displays main menu
         void gameSetup();  //displays game setup menu
         void playGame();  //runs the game numRounds number of times, reporting results and winner
         void clearScreen();  //clears the screen

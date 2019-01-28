@@ -17,31 +17,33 @@ Game::Game()
     srand (time(NULL));  //initialize random seed
     player1made = false;  //sets flag for player memory allocation
     player2made = false;
-    mainMenu();
+    
+    while(mainMenu() != 2);
 }
 
-void Game::mainMenu()
+int Game::mainMenu()
 {
 	int mainMenuChoice;
+
 	clearScreen();
 	std::cout << "Select One of the Following Options:\n" << std::endl;
 	std::cout << "	1: Start Dice War game" << std::endl;
 	std::cout << "	2: Quit" << std::endl << std:: endl;
-	std::cout << "Please Enter 1 or " << MAIN_MENU_LENGTH << ": ";
-
+	std::cout << "Please enter 1 or " << MAIN_MENU_LENGTH << ": ";
 	std::cin >> mainMenuChoice;
 	validateMenuChoice(mainMenuChoice, MAIN_MENU_LENGTH);
 
-    if (mainMenuChoice == 1)  //if choice is 2, main menu ends and the program finishes via main
+    if (mainMenuChoice == 1)  //if choice is 2, main menu function ends and the program finishes via main
     {
         gameSetup();
     }
+    return mainMenuChoice;
 }
 
 void Game::gameSetup()
 {
     const int MAX_DIE_SIDES = 100;
-    const int MAX_ROUNDS = 5000;
+    const int MAX_ROUNDS = 10000;
     int numRounds, p1die, p2die, p1sides, p2sides = -1;  //initialized to junk value
     
     clearScreen();
@@ -68,38 +70,43 @@ void Game::gameSetup()
     this->p1_score = 0;  //initializes scores to 0
     this->p2_score = 0;
 
-    if(p1die == 1)
-    {
+    if(p1die == 1){
         player1 = new LoadedDie(p1sides);
-        player1made = true;
+        player1made = true;  //sets flag to delete allocated memory later
     }   
-    else
-    {
+    else{
         player1 = new Die(p1sides);
         player1made = true;
     }
 
-    if(p2die == 1)
-    {
+    if(p2die == 1){
         player2 = new LoadedDie(p2sides);
         player2made = true;
     }   
-    else
-    {
+    else{
         player2 = new Die(p2sides);
         player2made = true;
     }
     clearScreen();
     playGame();
+
+    if(player1made == true){  //deletes allocated memory
+        delete player1;
+        player1made = false;
+    }
+    if(player2made == true){
+        delete player2;
+        player2made = false;
+    }
 }
 void Game::playGame()
 {
-    for(int i = 0; i < numRounds; i++)  //loop for the number of rounds specified
+    for(int currentRound = 0; currentRound < numRounds; currentRound++)  //loop for the number of rounds specified
     {
         int p1roll = player1->rollDie();
         int p2roll = player2->rollDie();
         
-        std::cout << "Round " << i+1 << std::endl;
+        std::cout << "Round " << currentRound + 1 << std::endl;
 
         std::cout << "Player 1 is using a " << player1->getSides() << "-sided ";  //report die status
         if(player1->getLoaded())
@@ -145,16 +152,21 @@ void Game::playGame()
     
     if(p1_score > p2_score)
     {
-        std::cout << "Player 1 wins!" << std::endl;
+        std::cout << "Player 1 wins!" << std::endl << std::endl;
     }
     else if (p1_score < p2_score)
     {
-        std::cout << "Player 2 wins!" << std::endl;
+        std::cout << "Player 2 wins!" << std::endl << std::endl;
     }
     else
     {
-        std::cout << "The game is a tie!" << std::endl;
+        std::cout << "The game is a tie!" << std::endl << std::endl;
     }
+
+    std::cout << "Press Enter to return to the main menu...";
+    std::cin.clear();
+    std::cin.ignore(10000, '\n');
+    std::cin.get();
 
 }
 void Game::clearScreen()
@@ -166,7 +178,7 @@ void Game::clearScreen()
 	#endif
 }
 
-Game::~Game()
+Game::~Game()  //these checks were used in a previous iteration and should not be necessary now
 {
     if(player1made = true)
     {
