@@ -15,9 +15,8 @@ const int MAIN_MENU_LENGTH = 2;
 Game::Game()
 {
     srand (time(NULL));  //initialize random seed
-    player1made = false;  //sets flag for player memory allocation
-    player2made = false;
-    
+    player1 = nullptr;  //ensure pointers are not dangling, probably not necessary
+    player2 = nullptr;
     while(mainMenu() != 2);
 }
 
@@ -70,34 +69,27 @@ void Game::gameSetup()
     this->p1_score = 0;  //initializes scores to 0
     this->p2_score = 0;
 
-    if(p1die == 1){
+    if(p1die == 1){  //allocates memory for dice
         player1 = new LoadedDie(p1sides);
-        player1made = true;  //sets flag to delete allocated memory later
     }   
     else{
         player1 = new Die(p1sides);
-        player1made = true;
     }
 
     if(p2die == 1){
         player2 = new LoadedDie(p2sides);
-        player2made = true;
     }   
     else{
         player2 = new Die(p2sides);
-        player2made = true;
     }
     clearScreen();
     playGame();
 
-    if(player1made == true){  //deletes allocated memory
-        delete player1;
-        player1made = false;
-    }
-    if(player2made == true){
-        delete player2;
-        player2made = false;
-    }
+    delete player1;   //deletes allocated memory
+    delete player2;
+
+    player1 = nullptr;
+    player2 = nullptr;
 }
 void Game::playGame()
 {
@@ -177,15 +169,12 @@ void Game::clearScreen()
 		std::cout << "\033[2J\033[1;1H";
 	#endif
 }
-
-Game::~Game()  //these checks were used in a previous iteration and should not be necessary now
+Game::~Game()
 {
-    if(player1made = true)
-    {
+    if(player1 != nullptr){
         delete player1;
     }
-    if(player2made = true)
-    {
+    if(player2 != nullptr){
         delete player2;
     }
 }

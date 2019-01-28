@@ -1,25 +1,25 @@
-PROJ = War
+PROJ = Lab3_Wilson_Andrew
 objects = main.o die.o game.o validation.o
-BIN = $(PROJ)
+BIN = War
 
 $(BIN): $(objects)
-	@g++ -g -o War $(objects)
+	@g++ -g -std=c++11 -o War $(objects)
 
 main.o: main.cpp
-	@g++ -c main.cpp
+	@g++ -std=c++11 -c main.cpp
 
 die.o: die.cpp die.hpp
-	@g++ -c die.cpp
+	@g++ -std=c++11 -c die.cpp
 
 game.o: game.cpp game.hpp
-	@g++ -c game.cpp
+	@g++ -std=c++11 -c game.cpp
 
 validation.o: validation.cpp validation.hpp
-	@g++ -c validation.cpp
+	@g++ -std=c++11 -c validation.cpp
 
 .PHONY : valgrind
 valgrind:
-	@valgrind --leak-check=full ./$(BIN)
+	@valgrind --leak-check=full --track-origins=yes ./$(BIN)
 
 .PHONY : zip
 zip:
@@ -27,4 +27,4 @@ zip:
 
 .PHONY : clean
 clean:
-	@rm War $(objects)
+	@rm $(BIN) $(objects)

@@ -13,8 +13,6 @@ class Game
 {   private:
         Die* player1;  //stores player 1's die
         Die* player2;  //stores player 1's die
-        bool player1made;  //tracks whether memory for player1 has been allocated
-        bool player2made;  //tracks whether memory for player2 has been allocated
         int p1_score;  //tracks player 1's score
         int p2_score;  //tracks player 1's score
         int numRounds;  //stores the number of rounds
@@ -24,8 +22,7 @@ class Game
         void clearScreen();  //clears the screen
     public:
         Game();  //default constructor, shows main menu then sets up game
-        ~Game();  //destructor that deallocates memory for dice
-
+        ~Game();  //destructor that double checks if memory has been deallocated
 };
 
 #endif //Die
