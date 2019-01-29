@@ -15,7 +15,7 @@
 class Zoo
 {   private:
         int playerCash;  //stores player's money
-        int baseFoodCost;  //will store user entered base food cost; not implemented yet
+        int baseFoodCost;  //stores base food cost
         int dayCounter;  //tracks game duration
         Tiger** tigerArray;  //pointer to array of tigers
         int tigerArraySize;  //tracks size of tiger array
@@ -32,28 +32,22 @@ class Zoo
         ~Zoo();  //destructor that deallocates memory
         void advanceDay();  //ages animals, calculates profit, 
         void randomEvent(int & eventBonus);  //causes a random event, used in advanceDay()
-        //there must be a way to do these 3 in one function but I can't figure it out
         void growArray(Tiger** &oldArray, int &arraySize); //doubles array length, per specifications
         void growArray(Penguin** &oldArray, int &arraySize); //doubles array length, per specifications
         void growArray(Turtle** &oldArray, int &arraySize); //doubles array length, per specifications
-        void purchaseAnimal();  //shows purchase animal menu at the end of the day
+        void purchaseAnimalMenu();  //shows purchase animal menu at the end of the day
+        void payForAnimals(int numTigers, int numPenguins, int numTurtles);  //takes 3 ints for the number of animals to be purchased, and deducts price from player cash
+        void animalBirth();  //gives birth to animals
         int getPlayerCash();  //returns player's money total
-        int getBaseFoodCost();  //returns base food cost. Not yet implemented
+        int getBaseFoodCost();  //returns base food cost.
         //takes 3 pointers to arrays and 3 array lengths, returns calcualtes fed cost. Order is tiger, penguin, turtle
         int calcFeedCost(Tiger** array1, int tigerCount, Penguin** array2, int penguinCount, Turtle** array3, int turtleCount);
         //takes 3 pointers to arrays and 3 array lengths, returns calcualtes animal revenue. Order is tiger, penguin, turtle
         int calcDailyRevenue(Tiger** array1, int tigerCount, Penguin** array2, int penguinCount, Turtle** array3, int turtleCount);  
-        bool hasAdults(Animal * arrayIn, int arraySize);  //searches animal arrays for adults, returns true if there are adults
+        void animalDies();  //kills random animal
+        bool hasAdults(Tiger** arrayIn, int arraySize);  //searches tiger arrays for adults, returns true if there is at least 1 adult
+        bool hasAdults(Penguin** arrayIn, int arraySize);  //searches penguin arrays for adults, returns true if there is at least 1 adult
+        bool hasAdults(Turtle** arrayIn, int arraySize);  //searches turtle arrays for adults, returns true if there is at least 1 adult
 };
 
 #endif //Zoo
-
-
-
-
-/*
- the zoo class should have a dynamic array for each type of animal. 
-    Each dynamic array should have a capacity of 10 animals to start with. 
-    If more animals are added, you should resize the dynamic array by 
-    doubling the starting capacity to hold more animals.
-*/

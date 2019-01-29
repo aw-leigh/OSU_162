@@ -4,6 +4,7 @@
 ** Description: Implementation file for Animal class
 *********************************************************************/
 #include "animal.hpp"
+#include "zoo.hpp"
 
 Animal::Animal()
 {

@@ -3,8 +3,6 @@
 #include "validation.hpp"
 #include "zoo.hpp"
 
-
-
 using std::cin;
 using std::cout;
 using std::endl;
@@ -15,11 +13,12 @@ int main()
 
     int startingFunds, numTigers, numPenguins, numTurtles= 0;
 
+    clearScreen();
+
     cout << "WELCOME TO ZOO TYCOON" << endl << endl;
 
-    cout << "Please enter the amount of starting funds in dollars (50000 - 200000)" << endl;
-    cin >> startingFunds;
-    validateRangedInt(startingFunds, 50000, 200000);
+    cout << "You have $25000 to start with, spend it wisely!" << endl << endl;
+    startingFunds = 25000;
 
     cout << "There are three types of animal available for purchase:" << endl << endl;
     cout << setw(22) << "Tigers" << setw(12) << "Penguins" << setw(12) << "Turtles" << endl;
@@ -28,7 +27,7 @@ int main()
     cout << "Litter size:" << setw(10) << "1 baby" << setw(12) << "5 babies" << setw(12) << "10 babies" << endl;
     cout << "Food cost:" << setw(12) << "5x base" << setw(12) << "1x base" << setw(12) << "1/2 base" << endl;
     cout << "Payout:" << setw(15) << "$2,000" << setw(12) << "$100" << setw(12) << "$5" << endl << endl;
-    cout << "Keep in mind, the base food cost is $10 per day!" << endl;
+    cout << "Keep in mind, the base food cost is $100 per day!" << endl << endl;
     
     cout << "You must buy either 1 or 2 of each animal." << endl << endl;
     cout << "How many tigers will you buy? (1 or 2): ";
