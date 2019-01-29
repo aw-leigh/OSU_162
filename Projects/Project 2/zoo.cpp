@@ -65,7 +65,9 @@ Zoo::Zoo(int startingCash, int numTigersStart, int numPenguinsStart, int numTurt
 
 void Zoo::advanceDay()  //ages animals, calculates profit, 
 {
-    int todaysRevenue, todaysFeedCost, eventBonus, keepPlaying = 0;
+    int todaysRevenue, keepPlaying = 0;
+    int eventBonus = 0;
+    int todaysFeedCost = 0;
     
     clearScreen();
     dayCounter++;
@@ -477,17 +479,17 @@ void Zoo::purchaseAnimalMenu()
 Zoo::~Zoo()  //destructor that deallocates memory
 {
     for (int i = 0; i < tigerCount; i++){ //deletes each individual animal, then the array
-        delete [] tigerArray[i];
+        delete tigerArray[i];
     }
     delete [] tigerArray;
 
     for (int i = 0; i < penguinCount; i++){
-        delete [] penguinArray[i];
+        delete penguinArray[i];
     }
     delete [] penguinArray;
 
     for (int i = 0; i < turtleCount; i++){
-        delete [] turtleArray[i];
+        delete turtleArray[i];
     }
     delete [] turtleArray;
 }
