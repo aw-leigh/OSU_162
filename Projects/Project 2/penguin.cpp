@@ -11,7 +11,7 @@ Penguin::Penguin()
     age = 0;
     cost = 1000;
     litterSize = 5;
-    baseFoodCost = 10;
+    baseFoodCost = 100;
     payoff = 100;
 }
 Penguin::Penguin(bool isAdult)

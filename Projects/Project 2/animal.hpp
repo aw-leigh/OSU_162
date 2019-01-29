@@ -1,7 +1,7 @@
 /*********************************************************************
 ** Author:      Andrew Wilson
 ** Date:        Jan 20, 2019
-** Description: Header file for Game class
+** Description: Header file for Animal class
 *********************************************************************/
 
 #ifndef ANIMAL_HPP

@@ -1,5 +1,5 @@
-PROJ = ZooTycoon
-BIN = $(PROJ)
+PROJ = Project2_Wilson_Andrew
+BIN = ZooTycoon
 objects = main.o zoo.o animal.o tiger.o penguin.o turtle.o validation.o
 
 $(BIN): $(objects)
@@ -36,4 +36,4 @@ zip:
 
 .PHONY : clean
 clean:
-	@rm $(PROJ) $(objects)
+	@rm $(BIN) $(objects)

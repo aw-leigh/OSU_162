@@ -11,7 +11,7 @@ Tiger::Tiger()  //one problem I see is that I'm creating a new copy of this data
     age = 0;
     cost = 10000;
     litterSize = 1;
-    baseFoodCost = 50;
+    baseFoodCost = 500;
     payoff = 2000;
 }
 Tiger::Tiger(bool isAdult)
