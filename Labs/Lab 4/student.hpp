@@ -17,7 +17,8 @@ class Student : public Person
         virtual void showScore();  //outputs rating message
         virtual int getScore();  //returns GPA
         virtual bool isStudent(); //returns true for student, false for not student. Used for save/load.
-        Student(); //unused default constructor
+        Student() {}; //unused default constructor
+        ~Student() {};
         Student(std::string name, int age, double GPA);  //constructor
 };
 

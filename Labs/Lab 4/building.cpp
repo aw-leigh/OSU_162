@@ -6,7 +6,6 @@
 #include <iostream>
 #include "building.hpp"
 
-Building::Building() {};  //unused default constructor
 Building::Building(std::string name, std::string address, int size)  //constructor
 {
     this->name = name;

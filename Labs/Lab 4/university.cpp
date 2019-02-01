@@ -132,13 +132,13 @@ void University::loadFile()  //loads people from CSV
 }
 University::~University()
 {
-    for(int i; i < buildingArray.size(); i++)
+    for(int i = 0; i < buildingArray.size(); i++)
     {
         delete buildingArray[i];
     }
     buildingArray.clear();
 
-    for(int i; i < personArray.size(); i++)
+    for(int i = 0; i < personArray.size(); i++)
     {
         delete personArray[i];
     }

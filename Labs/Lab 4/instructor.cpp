@@ -7,7 +7,6 @@
 #include "instructor.hpp"
 
 
-Instructor::Instructor() {}; //unused default constructor
 Instructor::Instructor(std::string name, int age, double rating)  //constructor
 {
     this->name = name;

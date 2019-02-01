@@ -17,7 +17,8 @@ class Instructor : public Person
         virtual void showScore();  //outputs rating message
         virtual int getScore();  //returns rating
         virtual bool isStudent(); //returns true for student, false for not student. Used for save/load.
-        Instructor(); //unused default constructor
+        Instructor() {}; //unused default constructor
+        ~Instructor() {};
         Instructor(std::string name, int age, double rating);  //constructor
 };
 

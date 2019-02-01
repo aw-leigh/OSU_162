@@ -15,7 +15,8 @@ class Building
         std::string address;  //stores address
         int size;  //stores size in sqft
     public:
-        Building();  //unused default constructor
+        Building() {};  //unused default constructor
+        ~Building() {};
         Building(std::string name, std::string address, int size);  //constructor
         std::string getName();
         std::string getAddress();

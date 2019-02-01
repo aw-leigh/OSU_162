@@ -7,7 +7,6 @@
 #include "student.hpp"
 
 
-Student::Student() {}; //unused default constructor
 Student::Student(std::string name, int age, double GPA)  //constructor
 {
     this->name = name;
