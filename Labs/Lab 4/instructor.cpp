@@ -22,3 +22,11 @@ void Instructor::showScore()
 {
     std::cout << "This instructor's rating is " << std::fixed << std::showpoint << std::setprecision(1) << this->rating;
 }
+int Instructor::getScore()
+{
+    return this->rating;
+}
+bool Instructor::isStudent()
+{
+    return false;
+}

@@ -18,6 +18,8 @@ class Person
     public:
         virtual void doWork() = 0;  //generates a random number and outputs work message
         virtual void showScore() = 0;  //outputs rating message
+        virtual int getScore() = 0;  //returns rating/GPA
+        virtual bool isStudent() = 0; //returns true for student, false for not student. Used for save/load.
         virtual std::string getName();
         virtual int getAge();
         virtual ~Person();

@@ -15,6 +15,8 @@ class Student : public Person
     public:
         virtual void doWork();  //generates a random number and outputs work message
         virtual void showScore();  //outputs rating message
+        virtual int getScore();  //returns GPA
+        virtual bool isStudent(); //returns true for student, false for not student. Used for save/load.
         Student(); //unused default constructor
         Student(std::string name, int age, double GPA);  //constructor
 };

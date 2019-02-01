@@ -12,5 +12,7 @@ void validateInt(int &input, int min, int max);  //reprompts if input is not an 
 void validateDouble(double &input);  //reprompts if input is not a decimal/integer
 void validateDouble(double &input, double min, double max);  //reprompts if input is not a decimal/integer or between min and max
 void validateMenuChoice(int &menuChoice, int menuLength);   //reprompts if input is not an integer between 1 and menuLength
+void clearScreen();  //clears the screen
+void systemPause();  //Pauses until user presses a key
 
 #endif

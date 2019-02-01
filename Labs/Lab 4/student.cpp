@@ -22,3 +22,11 @@ void Student::showScore()
 {
     std::cout << "This student's GPA is " << std::fixed << std::showpoint << std::setprecision(1) << this->GPA;
 }
+int Student::getScore()
+{
+    return this->GPA;
+}
+bool Student::isStudent()
+{
+    return true;
+}

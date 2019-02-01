@@ -18,11 +18,16 @@ class University
         std::vector<Building *> buildingArray;  //stores buildings
         std::vector<Person *> personArray;  //stores people
     public:
-        void printBuildings();  //prints the information on all buildings
-        void printPeople();  //prints the information on all people
         void addBuilding(Building* buildingIn);  //appends building to array
         void addPerson(Person* personIN);  //appends person to array
+        void printBuildings();  //prints the information on all buildings
+        void printPeopleFull();  //prints all the information on all people
+        void printPeopleNames();  //prints all the peoples' names
+        int getNumPeople();  //returns size of people array
+        void makePersonWork(int num); //makes a person work
         void printUniversityName(); //for testing 
+        void saveToFile();  //saves newly added people
+        void loadFile();  //loads people
         University();  //default constructor
         ~University();  //destructor
 };
