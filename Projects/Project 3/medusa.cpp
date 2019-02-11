@@ -38,9 +38,15 @@ int Medusa::attack()
 }
 
 //Returns defense roll
-int Medusa::defend()
+int Medusa::defend(int attack)
 {
-    return ((rand() % 6) + 1);  //1d6
+    int defenseRoll = (rand() % 6) + 1;  //1d6
+    int damage = attack - (defenseRoll + this->armor);  //1d6 defense + armor - attack
+    if(damage > 0)
+    {
+        this->strengthPoints -= damage;
+    }
+    return defenseRoll;
 }
 
 //Returns string "Medusa"

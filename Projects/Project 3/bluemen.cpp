@@ -30,26 +30,34 @@ int BlueMen::attack()
 }
 
 //Returns defense roll
-int BlueMen::defend()
+int BlueMen::defend(int attack)
 {
-    int defense = 0;
+    int defenseRoll = 0;
+    int damage = 0;
     
     if(this->strengthPoints <= 4)
     {
-        defense = ((rand() % 6) + 1);
+        defenseRoll = ((rand() % 6) + 1);
+        damage = attack - (defenseRoll + this->armor);
     }
     else if(this->strengthPoints <= 8)
     {
-        defense += ((rand() % 6) + 1);
-        defense += ((rand() % 6) + 1);
+        defenseRoll += ((rand() % 6) + 1);
+        defenseRoll += ((rand() % 6) + 1);
+        damage = attack - (defenseRoll + this->armor);
     }
     else
     {
-        defense += ((rand() % 6) + 1);
-        defense += ((rand() % 6) + 1);
-        defense += ((rand() % 6) + 1);
+        defenseRoll += ((rand() % 6) + 1);
+        defenseRoll += ((rand() % 6) + 1);
+        defenseRoll += ((rand() % 6) + 1);
+        damage = attack - (defenseRoll + this->armor);
     }
-    return defense; 
+    if(damage > 0)
+    {
+        this->strengthPoints -= damage;
+    }
+    return defenseRoll; 
 }
 //Returns string "BlueMen"
 std::string BlueMen::name() const

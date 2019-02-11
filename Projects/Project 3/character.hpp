@@ -26,14 +26,13 @@ class Character
         Character();
         virtual ~Character();
         virtual int attack() = 0;
-        virtual int defend() = 0;
+        virtual int defend(int attack) = 0;
         virtual std::string name() const = 0;
         virtual int getArmor();
         virtual int getSP();
         virtual bool getCanRevive();
         virtual void setCanRevive(bool revive);
-        virtual void setSP(int SP);
-        virtual void takeDamage(int damage);    
+        virtual void setSP(int SP);   
 };
 
 #endif //character

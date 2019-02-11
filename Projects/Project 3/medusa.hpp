@@ -18,7 +18,7 @@ class Medusa : public Character
         Medusa();
         virtual ~Medusa();
         virtual int attack();
-        virtual int defend();
+        virtual int defend(int attack);
         virtual std::string name() const;
 };
 

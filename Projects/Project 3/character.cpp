@@ -51,8 +51,3 @@ void Character::setSP(int SP)
 {
     this->strengthPoints = SP;
 }
-//Takes an int. Subtracts that int from SP
-void Character::takeDamage(int damage)
-{
-    this->strengthPoints -= damage;
-}

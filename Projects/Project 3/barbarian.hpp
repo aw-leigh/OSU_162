@@ -18,7 +18,7 @@ class Barbarian : public Character
         Barbarian();
         virtual ~Barbarian();
         virtual int attack();
-        virtual int defend();
+        virtual int defend(int attack);
         virtual std::string name() const;
 };
 

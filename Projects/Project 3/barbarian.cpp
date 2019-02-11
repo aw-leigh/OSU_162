@@ -29,10 +29,16 @@ int Barbarian::attack()
     return (((rand() % 6) + 1) + ((rand() % 6) + 1));  //2d6
 }
 
-//Returns defense roll
-int Barbarian::defend()
+//Takes attack roll, calculates & returns damage taken. Applies damage to SP.
+int Barbarian::defend(int attack)
 {
-    return (((rand() % 6) + 1) + ((rand() % 6) + 1));  //2d6
+    int defenseRoll = (((rand() % 6) + 1) + ((rand() % 6) + 1));
+    int damage = attack - (defenseRoll + this->armor);  //2d6 defense + armor - attack
+    if(damage > 0)
+    {
+        this->strengthPoints -= damage;
+    }
+    return defenseRoll;
 }
 
 //Returns string "Barbarian"

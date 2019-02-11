@@ -61,7 +61,7 @@ void selectCharacters(Character *&char1, Character *&char2)
 }
 
 //takes two character pointers by reference, runs the game until one character is dead
-void beginGame(Character *&char1, Character *&char2)
+bool playGame(Character *&char1, Character *&char2)
 {
     int round = 1;
     std::string char1Name;
@@ -78,8 +78,7 @@ void beginGame(Character *&char1, Character *&char2)
         char2Name = char2->name();        
     }
     
-
-    while(char1->getSP() > 0 && char2->getSP() > 0)
+    while(char1->getSP() > 0 && char2->getSP() > 0)  //play until someone dies
     {
         clearScreen();
         std::cout << "Round " << round << std::endl << std::endl;
@@ -89,13 +88,24 @@ void beginGame(Character *&char1, Character *&char2)
 
     delete char1;  //delete characters when game ends
     delete char2;
+
+    std::cout << "Play again? (Yes = 1   No = 2): ";  //prompt to play again
+    int choice = validateInt(1, 2);
+    if(choice == 1)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 //takes two character pointers by reference and two character names as strings, and performs one combat round and reports results
 void combatRound(Character *&char1, Character *&char2, std::string char1Name, std::string char2Name)
 {
     attackDetails(char1, char2, char1Name, char2Name); //fighter 1 attacks
-    if(!checkDeath(char1, char2, char1Name, char2Name)) //if figher 2 isn't dead, fighter 2 attacks
+    if(!checkDeath(char1, char2)) //if figher 2 isn't dead, fighter 2 attacks
     {
         attackDetails(char2, char1, char2Name, char1Name);
     }
@@ -103,7 +113,7 @@ void combatRound(Character *&char1, Character *&char2, std::string char1Name, st
     {
         std::cout << char2Name << " is dead! "<< char1Name << " wins!" << std::endl;
     }
-    if(checkDeath(char2, char1, char2Name, char1Name)) //if fighter 1 is dead, fighter 2 wins
+    if(checkDeath(char2, char1)) //if fighter 1 is dead, fighter 2 wins
     {
         std::cout << char1Name << " is dead! " << char2Name << " wins!" << std::endl;
     }
@@ -115,18 +125,11 @@ void combatRound(Character *&char1, Character *&char2, std::string char1Name, st
 }
 
 //returns true if char2 is dead, false if alive. Takes two character pointers by reference and two character names as strings
-bool checkDeath(Character *&char1, Character *&char2, std::string char1Name, std::string char2Name)
+bool checkDeath(Character *&char1, Character *&char2)
 {
-    if(char2->getSP() < 1 && char2->getCanRevive() == false)
+    if(char2->getSP() < 1)
     {
         return true;
-    }
-    else if(char2->getSP() < 1 && char2->getCanRevive() == true)
-    {
-        char2->setCanRevive(false);
-        char2->setSP(20);
-        std::cout << char2Name << " revives with 20 SP!!!" << std::endl << std::endl;
-        return false;
     }
     else
     {
@@ -137,46 +140,37 @@ bool checkDeath(Character *&char1, Character *&char2, std::string char1Name, std
 //takes two character pointers by reference and two character names as strings, and performs an individual attack action
 void attackDetails(Character *&attacker, Character *&defender, std::string attackerName, std::string defenderName)
 {
-    bool charm = false;
-    bool glare = false;
-    
+    int damage = 0;
+
     int attackRoll = attacker->attack(); 
-    int defenseRoll = defender->defend();
-    int damage = attackRoll - (defenseRoll + defender->getArmor());
-
-    if(defenseRoll == 1337){  //vampire's Charm returns 1337
-        charm = true;
-    }
-    if(attackRoll == 1337){  //medusa's Glare returns 1337
-        glare = true;
-    }
-
-    if(damage < 1){  //if (attack - defense) is negative, attack = 0
-        damage = 0;
-    }
-
-    if(!charm)
+    std::cout << attackerName << " rolled " << attackRoll << " for its attack!" << std::endl;
+    if(attackRoll == 1337)  //Glare returns an attack roll of 1337
     {
-        if(!glare)
-        {   //no charm no glare
-            std::cout << attackerName << " rolled " << attackRoll << " for its attack!" << std::endl;
-            std::cout << defenderName << " rolled " << defenseRoll << " for its defense!" << std::endl;
-            std::cout << defenderName <<" has " << defender->getArmor() << " armor and "<< defender->getSP() << "SP!" << std::endl;
-            std::cout << "Damage roll: " << attackRoll << " - (" << defenseRoll << " + " << defender->getArmor() << ") damage!" << std::endl;
-            std::cout << defenderName << " took " << damage << " damage!" << std::endl;
+        std::cout << "Medusa uses Glare!! It's super effective!!" << std::endl;
+    }
 
-            defender->takeDamage(damage);
-            std::cout << defenderName << " has " << defender->getSP() << " SP remaining!" << std::endl << std::endl;
-        }
-        else //glare, no charm
+    std::cout << defenderName <<" has " << defender->getArmor() << " armor and "<< defender->getSP() << "SP!" << std::endl;
+    
+    int defenseRoll = defender->defend(attackRoll);
+    if(defenseRoll == 1337) //Charm returns a defense roll of 1337
+    {
+        std::cout << defenderName << " used Charm! It's too charming to hit!" << std::endl;
+    }
+    else
+    {
+        std::cout << defenderName << " rolled " << defenseRoll << " for its defense!" << std::endl;
+        std::cout << "Damage roll: " << attackRoll << " - (" << defenseRoll << " + " << defender->getArmor() << ") damage!" << std::endl;
+        
+        damage = attackRoll - (defenseRoll + defender->getArmor());
+        if(damage < 0)
         {
-            std::cout << attackerName << " used Glare! It's super effective!"  << std::endl;
-            defender->takeDamage(damage);
-            std::cout << defenderName << " has been turned to stone!!" << std::endl;
+            damage = 0;
         }
+        std::cout << defenderName << " took " << damage << " damage!" << std::endl;
     }
-    else  //charm
+    if(defender->getSP() == 20 && damage > 0) //20 SP only happens when Harry Potter revives
     {
-    std::cout << defenderName << " is too charming! " << attackerName << " couldn't attack!" << std::endl << std::endl;        
+        std::cout << "Harry Potter was struck down, but revives with 20 SP!!" << std::endl;
     }
+    std::cout << defenderName << " has " << defender->getSP() << " SP remaining!" << std::endl << std::endl;
 }

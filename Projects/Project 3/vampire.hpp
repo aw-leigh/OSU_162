@@ -19,7 +19,7 @@ class Vampire : public Character
         Vampire();
         virtual ~Vampire();
         virtual int attack();
-        virtual int defend();
+        virtual int defend(int attack);
         virtual std::string name() const;
 };
 

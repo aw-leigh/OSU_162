@@ -28,8 +28,8 @@ void showMainMenu();
 //takes two character pointers by reference, instantiates appropriate character objects and assigns them to pointers
 void selectCharacters(Character *&char1, Character *&char2);
 
-//takes two character pointers by reference, runs the game until one character is dead
-void beginGame(Character *&char1, Character *&char2);
+//takes two character pointers by reference, runs the game until one character is dead. Prompts to play again.
+bool playGame(Character *&char1, Character *&char2);
 
 //takes two character pointers by reference and two character names as strings, and performs one combat round and reports results
 void combatRound(Character *&char1, Character *&char2, std::string char1Name, std::string char2Name);
@@ -38,4 +38,4 @@ void combatRound(Character *&char1, Character *&char2, std::string char1Name, st
 void attackDetails(Character *&char1, Character *&char2, std::string attackerName, std::string defenderName);
 
 //returns true if char2 is dead, false if alive. Takes two character pointers by reference and two character names as strings
-bool checkDeath(Character *&char1, Character *&char2, std::string char1Name, std::string char2Name);
+bool checkDeath(Character *&char1, Character *&char2);

@@ -18,7 +18,7 @@ class HarryPotter : public Character
         HarryPotter();
         virtual ~HarryPotter();
         virtual int attack();
-        virtual int defend();
+        virtual int defend(int attack);
         virtual std::string name() const;
 };
 

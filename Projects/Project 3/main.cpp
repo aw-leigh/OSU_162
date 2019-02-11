@@ -16,13 +16,16 @@
 
 int main()
 {
+    bool keepPlaying = true;
     srand (time(NULL));  //initialize random seed
     Character *char1 = nullptr;
     Character *char2 = nullptr;
 
+    do{
     showMainMenu();
     selectCharacters(char1, char2);
-    beginGame(char1, char2);
+    keepPlaying = playGame(char1, char2);
+    }while(keepPlaying);
 
     return 0;
 }

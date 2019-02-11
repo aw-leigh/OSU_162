@@ -18,7 +18,7 @@ class BlueMen : public Character
         BlueMen();
         virtual ~BlueMen();
         virtual int attack();
-        virtual int defend();
+        virtual int defend(int attack);
         virtual std::string name() const;
 };
 

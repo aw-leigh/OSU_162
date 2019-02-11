@@ -31,9 +31,20 @@ int HarryPotter::attack()
 }
 
 //Returns defense roll
-int HarryPotter::defend()
+int HarryPotter::defend(int attack)
 {
-    return (((rand() % 6) + 1) + ((rand() % 6) + 1));  //2d6
+    int defenseRoll = (((rand() % 6) + 1) + ((rand() % 6) + 1));  //2d6
+    int damage = attack - (defenseRoll + this->armor);  //1d6 defense + armor - attack
+    if(damage > 0)
+    {
+        this->strengthPoints -= damage;
+        if(this->strengthPoints < 1 && this->canRevive == true)
+        {
+            this->canRevive = false;
+            this->strengthPoints = 20;
+        }
+    }
+    return defenseRoll;
 }
 
 //Returns string "HarryPotter"

@@ -30,16 +30,26 @@ int Vampire::attack()
 }
 
 //DefReturns defense roll. 50% to proc Charm
-int Vampire::defend()
+int Vampire::defend(int attack)
 {
+    int defenseRoll, damage = 0;
+
     if(rand() % 2) //50% of the time
     {
-        return 1337;
+
+        defenseRoll = 1337;
     }
     else
     {
-        return ((rand() % 6) + 1);  //1d6
+        defenseRoll = ((rand() % 6) + 1);
+        damage = attack - (defenseRoll + this->armor);  //1d6 defense + armor - attack
     }
+
+    if(damage > 0)
+    {
+        this->strengthPoints -= damage;
+    }
+    return defenseRoll;
 }
 
 //Returns string "Vampire"
