@@ -20,6 +20,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 using std::setw;
+using std::string;
 
 void showMainMenu();
 
@@ -30,10 +31,9 @@ void selectCharacters(Character *&char1, Character *&char2);
 void beginGame(Character *&char1, Character *&char2);
 
 //performs one combat round
-void combatRound(Character *&char1, Character *&char2);
+void combatRound(Character *&char1, Character *&char2, string char1Name, string char2Name);
 
-void C1_attack(Character *&char1, Character *&char2);
-void C2_attack(Character *&char1, Character *&char2);
+void attackDetails(Character *&char1, Character *&char2, string attackerName, string defenderName);
 
 int main()
 {
@@ -77,8 +77,8 @@ void selectCharacters(Character *&char1, Character *&char2)
     //make character object
     switch(selection)
     {
-        case 1: { char1 = new Vampire(); }
-        case 2: { char1 = new Barbarian(); }
+        case 1: { char1 = new Vampire(); break;}
+        case 2: { char1 = new Barbarian(); break;}
     }
 
     cout << "Fighter 2: ";
@@ -86,61 +86,75 @@ void selectCharacters(Character *&char1, Character *&char2)
     //make character object
     switch(selection)
     {
-        case 1: { char2 = new Vampire(); }
-        case 2: { char2 = new Barbarian(); }
+        case 1: { char2 = new Vampire(); break;}
+        case 2: { char2 = new Barbarian(); break;}
     }
+    std::cin.ignore(10000,'\n'); //clear the buffer because if affects the pause screen in the next function
     clearScreen();
 }
 
 void beginGame(Character *&char1, Character *&char2)
 {
     int round = 1;
+    string char1Name;
+    string char2Name;
+
+    if(char1->name() == char2->name()) //if player chose 2 of the same character, append 1 and 2 to class names
+    {
+        char1Name = char1->name() + " 1";
+        char2Name = char2->name() + " 2";
+    }
+    else  //otherwise, refer to fighters by class name
+    {
+        char1Name = char1->name();
+        char2Name = char2->name();        
+    }
+    
+
     while(char1->getSP() > 0 && char2->getSP() > 0)
     {
         clearScreen();
         cout << "Round " << round << endl << endl;
-        cout << "Fighter 1: " << char1->name() << endl;
-        cout << "Fighter 2: " << char2->name() << endl << endl;
-        combatRound(char1, char2);
+        combatRound(char1, char2, char1Name, char2Name);
         ++round;
     }
 }
 
-void combatRound(Character *&char1, Character *&char2)
+void combatRound(Character *&char1, Character *&char2, string char1Name, string char2Name)
 {
-    C1_attack(char1, char2);
+    attackDetails(char1, char2, char1Name, char2Name);
 
     if(char2->getSP() > 0)
     {
-        C2_attack(char1, char2);
+        attackDetails(char2, char1, char2Name, char1Name);
     }
     else
     {
-        cout << "Fighter 2 is dead! Fighter 1 wins!" << endl;
+        cout << char2Name << " is dead! "<< char1Name << " wins!" << endl;
     }
 
     if(char1->getSP() < 1)
     {
-        cout << "Fighter 1 is dead! Fighter 2 wins!" << endl;
+        cout << char1Name << " is dead! " << char2Name << " wins!" << endl;
     }
     
 	std::cout << "Press enter to continue...";
 	std::cin.get();  // Proceed after new input from user
 }
 
-void C1_attack(Character *&char1, Character *&char2)
+void attackDetails(Character *&attacker, Character *&defender, string attackerName, string defenderName)
 {
     bool charm = false;
     bool glare = false;
     
-    int C1_attackRoll = char1->attack(); 
-    int C2_defenseRoll = char2->defend();
-    int damage = C1_attackRoll - (C2_defenseRoll + char2->getArmor());
+    int attackRoll = attacker->attack(); 
+    int defenseRoll = defender->defend();
+    int damage = attackRoll - (defenseRoll + defender->getArmor());
 
-    if(C2_defenseRoll == 1337){  //vampire's Charm returns 1337
+    if(defenseRoll == 1337){  //vampire's Charm returns 1337
         charm = true;
     }
-    if(C1_attackRoll == 1337){  //vampire's Charm returns 1337
+    if(attackRoll == 1337){  //vampire's Charm returns 1337
         glare = true;
     }
 
@@ -152,39 +166,22 @@ void C1_attack(Character *&char1, Character *&char2)
     {
         if(!glare)
         {   //no charm no glare
-            cout << "Fighter 1 rolled " << C1_attackRoll << " for its attack!" << endl;
-            cout << "Fighter 2 rolled " << C2_defenseRoll << " for its defense!" << endl;
-            cout << "Fighter 2 has " << char2->getArmor() << " armor and "<< char2->getSP() << "SP!" << endl;
-            cout << "Damage roll: " << C1_attackRoll << " - (" << C2_defenseRoll << " + " << char2->getArmor() << ") damage!" << endl;
-            cout << "Fighter 2 took " << damage << " damage!" << endl;
+            cout << attackerName << " rolled " << attackRoll << " for its attack!" << endl;
+            cout << defenderName << " rolled " << defenseRoll << " for its defense!" << endl;
+            cout << defenderName <<" has " << defender->getArmor() << " armor and "<< defender->getSP() << "SP!" << endl;
+            cout << "Damage roll: " << attackRoll << " - (" << defenseRoll << " + " << defender->getArmor() << ") damage!" << endl;
+            cout << defenderName << " took " << damage << " damage!" << endl;
 
-            char2->takeDamage(damage);
-            cout << "Fighter 2 has " << char2->getSP() << " SP remaining!" << endl << endl;
+            defender->takeDamage(damage);
+            cout << defenderName << " has " << defender->getSP() << " SP remaining!" << endl << endl;
         }
-        //glare, no charm
+        else //glare, no charm
+        {
+            
+        }
     }
-    //charm
-    cout << "Fighter 2 is too charming! Fighter 1 couldn't attack!" << endl;
-}
-
-void C2_attack(Character *&char1, Character *&char2)
-{
-    int C2_attackRoll = char2->attack();
-    int C1_defenseRoll = char1->defend();
-
-
-    int damage = C2_attackRoll - (C1_defenseRoll + char1->getArmor());
-    if(damage < 1){
-        damage = 0;
+    else  //charm
+    {
+    cout << defenderName << " is too charming! " << attackerName << " couldn't attack!" << endl << endl;        
     }
-
-    cout << "Fighter 2 rolled " << C2_attackRoll << " for its attack!" << endl;
-    cout << "Fighter 1 rolled " << C1_defenseRoll << " for its defense!" << endl;
-    cout << "Fighter 1 has " << char1->getArmor() << " armor and "<< char1->getSP() << "SP!" << endl;
-    cout << "Damage roll: " << C2_attackRoll << " - (" << C1_defenseRoll << " + " << char1->getArmor() << ") damage!" << endl;
-    cout << "Fighter 1 took " << damage << " damage!" << endl;
-
-    char1->takeDamage(damage);
-    cout << "Fighter 1 has " << char1->getSP() << " SP remaining!" << endl << endl;
 }
-

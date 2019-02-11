@@ -2,7 +2,7 @@
 ** Program name: Vampire.cpp
 ** Author:       Andrew Wilson
 ** Date:         February 11, 2019
-** Description:  This is the Barbarian class implementation file.
+** Description:  This is the Vampire class implementation file.
 **               Inherits from Character.
 ** Methods:      
 **               Constructor, deconstructor
@@ -38,7 +38,7 @@ int Vampire::defend()
     }
     else
     {
-        return (((rand() % 6) + 1) + ((rand() % 6) + 1));  //2d6
+        return ((rand() % 6) + 1);  //1d6
     }
 }
 

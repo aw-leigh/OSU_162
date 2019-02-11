@@ -1,5 +1,5 @@
 /***************************************************************
-** Program name: Character.hpp 
+** Program name: Vampire.hpp 
 ** Author:       Andrew Wilson 
 ** Date:         February 11, 2019
 ** Description:  This is the Vampire class specification file.
