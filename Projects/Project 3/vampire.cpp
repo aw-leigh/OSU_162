@@ -10,8 +10,8 @@
 **               int defend()
 ***************************************************************/
 
-#include "Character.hpp"
-#include "Vampire.hpp"
+#include "character.hpp"
+#include "vampire.hpp"
 
 //Default constructor
 Vampire::Vampire(): Character()
@@ -23,13 +23,13 @@ Vampire::Vampire(): Character()
 //Destructor.
 Vampire::~Vampire() {}
 
-//Returns armor value
+//Returns attack roll
 int Vampire::attack()
 {
     return ((rand() % 12) + 1);  //1d12
 }
 
-//Returns SP value
+//DefReturns defense roll. 50% to proc Charm
 int Vampire::defend()
 {
     if(rand() % 2) //50% of the time

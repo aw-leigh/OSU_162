@@ -1,8 +1,8 @@
 /***************************************************************
-** Program name: Barbarian.cpp
+** Program name: HarryPotter.cpp
 ** Author:       Andrew Wilson
 ** Date:         February 11, 2019
-** Description:  This is the Barbarian class implementation file.
+** Description:  This is the HarryPotter class implementation file.
 **               Inherits from Character.
 ** Methods:      
 **               Constructor, deconstructor
@@ -11,32 +11,33 @@
 ***************************************************************/
 
 #include "character.hpp"
-#include "barbarian.hpp"
+#include "harrypotter.hpp"
 
 //Default constructor
-Barbarian::Barbarian(): Character()
+HarryPotter::HarryPotter(): Character()
 {
-    this->strengthPoints = 12;
+    this->strengthPoints = 10;
     this->armor = 0;
+    this->canRevive = true;
 }
 
 //Destructor.
-Barbarian::~Barbarian() {}
+HarryPotter::~HarryPotter() {}
 
 //Returns attack roll
-int Barbarian::attack()
+int HarryPotter::attack()
 {
     return (((rand() % 6) + 1) + ((rand() % 6) + 1));  //2d6
 }
 
 //Returns defense roll
-int Barbarian::defend()
+int HarryPotter::defend()
 {
     return (((rand() % 6) + 1) + ((rand() % 6) + 1));  //2d6
 }
 
-//Returns string "Barbarian"
-std::string Barbarian::name() const
+//Returns string "HarryPotter"
+std::string HarryPotter::name() const
 {
-    return "Barbarian";
+    return "Harry Potter";
 }

@@ -1,4 +1,4 @@
-vampire.o: vampire.cpp character.hpp \
+harrypotter.o: harrypotter.cpp character.hpp \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdlib.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstdlib \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++config.h \
@@ -96,7 +96,8 @@ vampire.o: vampire.cpp character.hpp \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\basic_ios.tcc \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ostream.tcc \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\istream \
- c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\istream.tcc vampire.hpp
+ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\istream.tcc \
+ harrypotter.hpp
 
 character.hpp:
 
@@ -308,4 +309,4 @@ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\istream:
 
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\istream.tcc:
 
-vampire.hpp:
+harrypotter.hpp:

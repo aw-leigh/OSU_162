@@ -20,6 +20,7 @@ class Character
     protected:
         int armor;
         int strengthPoints;
+        bool canRevive;
 
     public:
         Character();
@@ -29,6 +30,9 @@ class Character
         virtual std::string name() const = 0;
         virtual int getArmor();
         virtual int getSP();
+        virtual bool getCanRevive();
+        virtual void setCanRevive(bool revive);
+        virtual void setSP(int SP);
         virtual void takeDamage(int damage);    
 };
 

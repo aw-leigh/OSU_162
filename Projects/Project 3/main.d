@@ -7,7 +7,7 @@ main.o: main.cpp c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdlib.h \
  c:\mingw\include\msvcrtver.h c:\mingw\include\w32api.h \
  c:\mingw\include\sdkddkver.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\stddef.h c:\mingw\include\time.h \
- c:\mingw\include\sys\types.h \
+ c:\mingw\include\sys\types.h gameFunctions.hpp \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\iostream \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ostream \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\ios \
@@ -114,7 +114,8 @@ main.o: main.cpp c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdlib.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\tuple \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\array \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\uses_allocator.h \
- character.hpp barbarian.hpp vampire.hpp validation.hpp
+ character.hpp barbarian.hpp vampire.hpp medusa.hpp harrypotter.hpp \
+ bluemen.hpp validation.hpp
 
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdlib.h:
 
@@ -141,6 +142,8 @@ c:\mingw\lib\gcc\mingw32\6.3.0\include\stddef.h:
 c:\mingw\include\time.h:
 
 c:\mingw\include\sys\types.h:
+
+gameFunctions.hpp:
 
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\iostream:
 
@@ -365,5 +368,11 @@ character.hpp:
 barbarian.hpp:
 
 vampire.hpp:
+
+medusa.hpp:
+
+harrypotter.hpp:
+
+bluemen.hpp:
 
 validation.hpp:

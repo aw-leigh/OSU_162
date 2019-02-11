@@ -14,30 +14,43 @@
 **               int defend()
 ***************************************************************/
 
-#include "Character.hpp"
+#include "character.hpp"
 
 //Character constructor. Unused
 Character::Character()
 {
     this->strengthPoints = 1337;  //junk values
     this->armor = 1337;
+    this->canRevive = false;
 }
 
 //Character destructor. Unused
 Character::~Character() {}
 
-//Returns armor value
 int Character::getArmor()
 {
-    return armor;
+    return this->armor;
 }
 
-//Returns SP value
 int Character::getSP()
 {
-    return strengthPoints;
+    return this->strengthPoints;
 }
 
+bool Character::getCanRevive()
+{
+    return this->canRevive;
+}
+
+void Character::setCanRevive(bool revive)
+{
+    this->canRevive = revive;
+}
+
+void Character::setSP(int SP)
+{
+    this->strengthPoints = SP;
+}
 //Takes an int. Subtracts that int from SP
 void Character::takeDamage(int damage)
 {

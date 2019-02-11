@@ -1,4 +1,4 @@
-barbarian.o: barbarian.cpp Character.hpp \
+barbarian.o: barbarian.cpp character.hpp \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdlib.h \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\cstdlib \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\mingw32\bits\c++config.h \
@@ -97,9 +97,9 @@ barbarian.o: barbarian.cpp Character.hpp \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\ostream.tcc \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\istream \
  c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\istream.tcc \
- Barbarian.hpp character.hpp
+ barbarian.hpp
 
-Character.hpp:
+character.hpp:
 
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\stdlib.h:
 
@@ -309,6 +309,4 @@ c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\istream:
 
 c:\mingw\lib\gcc\mingw32\6.3.0\include\c++\bits\istream.tcc:
 
-Barbarian.hpp:
-
-character.hpp:
+barbarian.hpp:
