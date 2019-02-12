@@ -47,6 +47,7 @@ void selectCharacters(Character *&char1, Character *&char2)
 
     std::cout << "Fighter 2: ";
     selection = validateInt(1, 5);   
+
     //make character object
     switch(selection)
     {
@@ -118,13 +119,19 @@ void combatRound(Character *&char1, Character *&char2, std::string char1Name, st
         std::cout << char1Name << " is dead! " << char2Name << " wins!" << std::endl;
     }
     
-    //add goodbye prompt if game is over
-
-	std::cout << "Press enter to continue...";
-	std::cin.get();  // Proceed after new input from user
+    if(checkDeath(char2, char1) || checkDeath(char1, char2))
+    {
+        std::cout << "Thank you for playing!";
+	    std::cin.get();  // Proceed after new input from user
+    }
+    else
+    {
+        std::cout << "Press enter to continue to the next round!";
+	    std::cin.get();  // Proceed after new input from user
+    }
 }
 
-//returns true if char2 is dead, false if alive. Takes two character pointers by reference and two character names as strings
+//returns true if char2 is dead, false if alive. Takes two character pointers by reference
 bool checkDeath(Character *&char1, Character *&char2)
 {
     if(char2->getSP() < 1)
@@ -143,11 +150,15 @@ void attackDetails(Character *&attacker, Character *&defender, std::string attac
     int damage = 0;
 
     int attackRoll = attacker->attack(); 
-    std::cout << attackerName << " rolled " << attackRoll << " for its attack!" << std::endl;
     if(attackRoll == 1337)  //Glare returns an attack roll of 1337
     {
-        std::cout << "Medusa uses Glare!! It's super effective!!" << std::endl;
+        std::cout << attackerName << " uses Glare!! It's super effective!!" << std::endl;
     }
+    else
+    {
+        std::cout << attackerName << " rolled " << attackRoll << " for its attack!" << std::endl;
+    }
+    
 
     std::cout << defenderName <<" has " << defender->getArmor() << " armor and "<< defender->getSP() << "SP!" << std::endl;
     

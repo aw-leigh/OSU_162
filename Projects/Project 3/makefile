@@ -2,7 +2,7 @@
 PROJECT = Lab3_Wilson_Andrew
 
 #Final executable name
-BIN = F
+BIN = FantasyCombat
 
 #automatically includes all cpp files in directory
 SOURCES = $(wildcard *.cpp)
