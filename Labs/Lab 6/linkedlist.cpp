@@ -35,6 +35,7 @@ Linkedlist::~Linkedlist()
     }    
 }
 
+//Takes an int. Adds node to head with value of int
 void Linkedlist::addNodeHead(int val)
 {
     //if this is the first node added, it is both head and tail
@@ -52,6 +53,8 @@ void Linkedlist::addNodeHead(int val)
         head = newNode;          //head is new node
     }
 }
+
+//Takes an int. Adds node to tail with value of int
 void Linkedlist::addNodeTail(int val)
 {
     //if this is the first node added, it is both head and tail
@@ -69,7 +72,9 @@ void Linkedlist::addNodeTail(int val)
         tail = newNode;          //tail is new node
     }   
 }
-void Linkedlist::rmNodeHead()  //crashes when it deletes last one
+
+//removes the head node. Gives warning if there are no nodes to delete.
+void Linkedlist::rmNodeHead()
 {
     if(head == nullptr)  //if there are no nodes
     {
@@ -89,7 +94,9 @@ void Linkedlist::rmNodeHead()  //crashes when it deletes last one
         head->setPrev(nullptr);
     }
 }
-void Linkedlist::rmNodeTail()  //crashes when it deletes last one
+
+//removes the tail node. Gives warning if there are no nodes to delete.
+void Linkedlist::rmNodeTail()
 {
     if(tail == nullptr)  //if there are no nodes
     {
@@ -109,6 +116,8 @@ void Linkedlist::rmNodeTail()  //crashes when it deletes last one
         tail->setNext(nullptr);
     }
 }
+
+//transverses the list head to tail, printing each value
 void Linkedlist::transverseForward()
 {
     clearScreen();
@@ -128,6 +137,8 @@ void Linkedlist::transverseForward()
         std::cout << std::endl;
     }
 }
+
+//transverses the list tail to head, printing each value
 void Linkedlist::transverseBackward()
 {
     clearScreen();
@@ -148,6 +159,8 @@ void Linkedlist::transverseBackward()
         std::cout << std::endl;
     }
 }
+
+//prints the value of the head node
 void Linkedlist::getHeadValue()
 {
     if(this->head == nullptr && this->tail == nullptr)  //if list is empty
@@ -162,6 +175,8 @@ void Linkedlist::getHeadValue()
         systemPause();
     }  
 }
+
+//prints the value of the tail node
 void Linkedlist::getTailValue()
 {
     if(this->head == nullptr && this->tail == nullptr)  //if list is empty
@@ -176,6 +191,8 @@ void Linkedlist::getTailValue()
         systemPause();
     }
 }
+
+//creates nodes from supplied text file
 void Linkedlist::readFromFile()
 {
     int val = 0;
