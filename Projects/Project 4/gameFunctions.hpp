@@ -46,3 +46,9 @@ void attackDetails(Character *&char1, Character *&char2, std::string attackerNam
 
 //returns true if fighter is dead, false if alive. Takes a character pointer by reference
 bool checkDeath(Character *&fighter);
+
+//takes two ints for team scores, prints win/lose/tie message to console based on scores
+void showScore(int team1Score, int team2Score);
+
+//prompts console whether to display loser pile, and displays if chosen
+void showLosers(Queue * const losers);

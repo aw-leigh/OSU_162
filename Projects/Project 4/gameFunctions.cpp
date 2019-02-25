@@ -197,3 +197,32 @@ void attackDetails(Character *&attacker, Character *&defender, std::string attac
     }
     std::cout << defenderName << " has " << defender->getSP() << " SP remaining!" << std::endl << std::endl;
 }
+
+void showScore(int team1Score, int team2Score)
+{
+    std::cout << "Final result: \n"<< "Team 1: "<< team1Score << "\nTeam 2: " << team2Score << std::endl;
+    if(team1Score > team2Score)
+    {
+        std::cout << "Team 1 Wins!!\n\n";
+    }
+    else if(team2Score > team1Score)
+    {
+        std::cout << "Team 2 Wins!!\n\n";
+    }
+    else
+    {
+        std::cout << "We have a tie!!\n\n";
+    }
+}
+
+void showLosers(Queue * const losers)
+{
+    std::cout << "Display loser pile? (1 = Yes  2 = No): ";
+    int choice = validateInt(1,2);
+    if(choice = 1)
+    {
+        std::cout << "\nLosers" << std::endl;
+        std::cout << "------" << std::endl;
+        losers->printQueue();
+    }
+}
