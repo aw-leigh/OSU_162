@@ -19,7 +19,7 @@ $(BIN): $(OBJECTS)
 #allows memory leak checking with "make valgrind"
 .PHONY : valgrind
 valgrind:
-	@valgrind --leak-check=full --track-origins=yes ./$(BIN)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(BIN)
 
 #zips all cpp hpp pdf and makefiles with "make zip"
 .PHONY : zip

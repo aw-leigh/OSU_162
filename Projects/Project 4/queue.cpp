@@ -25,15 +25,18 @@ Queue::Queue()
 }
 Queue::~Queue()
 {
-    //delete everything
-    QueueNode * tempNodePtr = head->prev;
-    while(tempNodePtr != head)
+    if(head != nullptr)
     {
-        QueueNode * garbage = tempNodePtr;
-        tempNodePtr = tempNodePtr->prev;
-        delete garbage;
+        //delete everything
+        QueueNode * tempNodePtr = head->prev;
+        while(tempNodePtr != head)
+        {
+            QueueNode * garbage = tempNodePtr;
+            tempNodePtr = tempNodePtr->prev;
+            delete garbage;
+        }
+        delete head;
     }
-    delete head;
 }
 
 //Accessors
@@ -108,6 +111,29 @@ void Queue::removeFront()
         tempNodePtr->next = head->next;
         tempNodePtr = head->next;
         tempNodePtr->prev = head->prev;
+        delete head;
+        head = tempNodePtr;
+    }
+}
+void Queue::removeFrontandDelete()
+{
+    if(head == nullptr)  //no nodes
+    {
+        std::cout << "The queue is empty! 3 \n";
+    }
+    else if (head->next == head)  //only one node
+    {
+        delete head->fighter;
+        delete head;
+        head = nullptr;
+    }
+    else  //2+ nodes remaining
+    {
+        QueueNode * tempNodePtr = head->prev;
+        tempNodePtr->next = head->next;
+        tempNodePtr = head->next;
+        tempNodePtr->prev = head->prev;
+        delete head->fighter;
         delete head;
         head = tempNodePtr;
     }

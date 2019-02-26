@@ -94,44 +94,46 @@ void playGame(Queue *&team1, Queue *&team2, Queue *&loserPile, int &team1Score, 
         combatRound(fighter1, fighter2, fighter1Name, fighter2Name);
         if(!checkDeath(fighter1) && !checkDeath(fighter2))
         {
-            std::cout << "Press enter to continue to the next round!";
+            std::cout << "Press enter to continue to the next combat round!";
             std::cin.get();  // Proceed after new input from user   
         }
     }
-    if(checkDeath(fighter1)) //fighter 1 is dead: clone fighter1 and add to dead pile. heal fighter 2
+    if(checkDeath(fighter1)) //fighter 1 is dead: add to dead pile. heal fighter 2
     {
         std::cout << fighter1Name << " is dead! " << fighter2Name << " heals " << fighter2->heal() <<" SP and moves to the back of the lineup!" << std::endl;
-        dead = fighter1->clone();
+        dead = fighter1;
         deadName = fighter1Name;
         winningTeam = team2;
         losingTeam = team1;
-        survivor = fighter2->clone();
+        survivor = fighter2;
         survivorName = fighter2Name;
         team2Score += 2;
         team1Score -= 1;
     }
-    else //fighter 2 is dead: clone fighter2 and add to dead pile. heal fighter 1
+    else //fighter 2 is dead: add to dead pile. heal fighter 1
     {
         std::cout << fighter2Name << " is dead! " << fighter1Name << " heals " << fighter1->heal() <<" SP and moves to the back of the lineup!" << std::endl;
-        dead = fighter2->clone();
+        dead = fighter2;
         deadName = fighter2Name;
         winningTeam = team1;
         losingTeam = team2;
-        survivor = fighter1->clone();
+        survivor = fighter1;
         survivorName = fighter1Name;
         team1Score += 2;
         team2Score -= 1;
     }
     //TODO: tell which next fighter is up
-    std::cout << "Press enter to continue to the next round!";
+    std::cout << "Press enter to bring in the next fighters!";
     std::cin.get();   
 
     
+    
+    loserPile->addBack(dead, deadName);  //and add new node with dead to loser pile
     losingTeam->removeFront();  //move loser to loser pile: delete front node
-    loserPile->addBack(dead, deadName);  //and add new node with cloned dead to loser pile
 
-    winningTeam->removeFront();  
     winningTeam->addBack(survivor, survivorName);
+    winningTeam->removeFront();  
+
 }
 
 //takes two character pointers by reference and two character names as strings, and performs one combat round and reports results. Returns 1 if fighter 1 dies, 2 if fighter 2 dies

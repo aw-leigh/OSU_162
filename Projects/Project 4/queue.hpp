@@ -33,6 +33,7 @@ class Queue
         void addBack(Character * fighter, std::string name);
         QueueNode * getFront();
         void removeFront();
+        void removeFrontandDelete();
         void printQueue();
 };
 

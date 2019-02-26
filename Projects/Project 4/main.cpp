@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <>
 
 #include "character.hpp"
 #include "queue.hpp"
@@ -13,11 +12,11 @@ int main()
 
     srand (time(NULL));  //initialize random seed
 
+    Queue * team1 = new Queue;
+    Queue * team2 = new Queue;
+    Queue * losers = new Queue;
+
     do{
-        Queue * team1 = new Queue;
-        Queue * team2 = new Queue;
-        Queue * losers = new Queue;
-        
         clearScreen();
         std::cout << "Welcome to Fantasy Combat!" << std::endl << std::endl;
         std::cout << "The winner of each round earns 2 points, and the loser loses 1 point" << std::endl << std::endl;
@@ -34,18 +33,18 @@ int main()
         clearScreen();
         showScore(team1Score, team2Score);
         showLosers(losers);
-
-        if(!team1->isEmpty())
+        
+        while(!team1->isEmpty())
         {
-            delete team1;
+            team1->removeFrontandDelete();
         }
-        if(!team2->isEmpty())
+        while(!team2->isEmpty())
         {
-            delete team2;
+            team2->removeFrontandDelete();
         }
-        if(!losers->isEmpty())
+        while(!losers->isEmpty())
         {
-            delete losers;
+            losers->removeFrontandDelete();
         }
 
         std::cout << "Play again? (1 = Yes  2 = No): ";
@@ -56,6 +55,11 @@ int main()
         }
 
     }while(keepPlaying);
- 
+    
+    
+    delete team1;
+    delete team2;
+    delete losers;
+
     return 0;
 }
