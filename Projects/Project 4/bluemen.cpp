@@ -21,12 +21,6 @@ BlueMen::BlueMen(): Character()
     this->armor = 3;
 }
 
-//clones current BlueMen object
-BlueMen* BlueMen::clone() const
-{
-    return new BlueMen(*this);
-}
-
 //Destructor.
 BlueMen::~BlueMen() {}
 

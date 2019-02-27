@@ -125,15 +125,12 @@ void playGame(Queue *&team1, Queue *&team2, Queue *&loserPile, int &team1Score, 
     //TODO: tell which next fighter is up
     std::cout << "Press enter to bring in the next fighters!";
     std::cin.get();   
-
-    
     
     loserPile->addBack(dead, deadName);  //and add new node with dead to loser pile
     losingTeam->removeFront();  //move loser to loser pile: delete front node
 
     winningTeam->addBack(survivor, survivorName);
     winningTeam->removeFront();  
-
 }
 
 //takes two character pointers by reference and two character names as strings, and performs one combat round and reports results. Returns 1 if fighter 1 dies, 2 if fighter 2 dies
@@ -177,7 +174,7 @@ void attackDetails(Character *&attacker, Character *&defender, std::string attac
     std::cout << defenderName <<" has " << defender->getArmor() << " armor and "<< defender->getSP() << "SP!" << std::endl;
     
     int defenseRoll = defender->defend(attackRoll);
-    if(defenseRoll == 1337) //Charm returns a defense roll of 1337
+    if(defenseRoll == 1337) //Charm returns a defense roll of 1337. It skips the below damage calculations.
     {
         std::cout << defenderName << " used Charm! It's too charming to hit!" << std::endl;
     }

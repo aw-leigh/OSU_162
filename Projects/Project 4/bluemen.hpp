@@ -17,7 +17,6 @@ class BlueMen : public Character
     public:
         BlueMen();
         virtual ~BlueMen();
-        virtual BlueMen* clone() const;
         virtual int attack();
         virtual int defend(int attack);
         virtual std::string name() const;

@@ -20,13 +20,6 @@ Vampire::Vampire(): Character()
     this->maxSP = 18;
     this->armor = 1;
 }
-
-//clones current Vampire object
-Vampire* Vampire::clone() const
-{
-    return new Vampire(*this);
-}
-
 //Destructor.
 Vampire::~Vampire() {}
 

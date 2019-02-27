@@ -18,7 +18,6 @@ class Vampire : public Character
     public:
         Vampire();
         virtual ~Vampire();
-        virtual Vampire* clone() const;
         virtual int attack();
         virtual int defend(int attack);
         virtual std::string name() const;

@@ -17,7 +17,6 @@ class Medusa : public Character
     public:
         Medusa();
         virtual ~Medusa();
-        virtual Medusa* clone() const;
         virtual int attack();
         virtual int defend(int attack);
         virtual std::string name() const;

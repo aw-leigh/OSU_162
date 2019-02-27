@@ -22,12 +22,6 @@ HarryPotter::HarryPotter(): Character()
     this->canRevive = true;
 }
 
-//clones current HarryPotter object
-HarryPotter* HarryPotter::clone() const
-{
-    return new HarryPotter(*this);
-}
-
 //Destructor.
 HarryPotter::~HarryPotter() {}
 

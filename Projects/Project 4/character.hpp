@@ -26,7 +26,6 @@ class Character
     public:
         Character();
         Character(const Character& oldCharacter); // copy constructor 
-        virtual Character* clone() const = 0;  //clones current character object, from https://stackoverflow.com/questions/12255546/c-deep-copying-a-base-class-pointer
         virtual ~Character();
         virtual int attack() = 0;
         virtual int defend(int attack) = 0;

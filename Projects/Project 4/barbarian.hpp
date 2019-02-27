@@ -17,7 +17,6 @@ class Barbarian : public Character
     public:
         Barbarian();
         virtual ~Barbarian();
-        virtual Barbarian* clone() const;
         virtual int attack();
         virtual int defend(int attack);
         virtual std::string name() const;

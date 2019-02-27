@@ -17,7 +17,6 @@ class HarryPotter : public Character
     public:
         HarryPotter();
         virtual ~HarryPotter();
-        virtual HarryPotter* clone() const;
         virtual int attack();
         virtual int defend(int attack);
         virtual std::string name() const;

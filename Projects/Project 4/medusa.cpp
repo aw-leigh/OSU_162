@@ -21,12 +21,6 @@ Medusa::Medusa(): Character()
     this->armor = 3;
 }
 
-//clones current Medusa object
-Medusa* Medusa::clone() const
-{
-    return new Medusa(*this);
-}
-
 //Destructor.
 Medusa::~Medusa() {}
 

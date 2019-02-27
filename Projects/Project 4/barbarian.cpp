@@ -20,13 +20,6 @@ Barbarian::Barbarian(): Character()
     this->maxSP = 12;
     this->armor = 0;
 }
-
-//clones current Barbarian object
-Barbarian* Barbarian::clone() const
-{
-    return new Barbarian(*this);
-}
-
 //Destructor.
 Barbarian::~Barbarian() {}
 
