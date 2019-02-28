@@ -16,30 +16,47 @@ using std::vector;
 
 int main()
 {
-    vector<int> control;
-    vector<int> early;
-    vector<int> middle;
-    vector<int> end;
+    int * control;
+    int * early;
+    int * middle;
+    int * end;
+
+    int controlSize, earlySize, middleSize, endSize;
 
     clearScreen();
 
-    readFileIntoVector(control, "control.txt");
-    readFileIntoVector(early, "early.txt");
-    readFileIntoVector(middle, "middle.txt");
-    readFileIntoVector(end, "end.txt");
+    controlSize = readFileIntoArray(control, "control.txt");
+    earlySize = readFileIntoArray(early, "early.txt");
+    middleSize = readFileIntoArray(middle, "middle.txt");
+    endSize = readFileIntoArray(end, "end.txt");
 
-    simpleSearch(control, early, middle, end);
+    cout << "Simple Search: Enter an integer value to search for: ";
+    int searchValue = validateInt();
+    cout << endl;
+
+    simpleSearch(control, "control", controlSize, searchValue);
+    simpleSearch(early, "early", earlySize, searchValue);
+    simpleSearch(middle, "middle", middleSize, searchValue);
+    simpleSearch(end, "end", endSize, searchValue);
 
     cout << endl;
     systemPause();
     clearScreen();
 
-    sortAndOutput(control, early, middle, end);
+    sortAndOutput(control, "control", controlSize);
+    sortAndOutput(early, "early", earlySize);
+    sortAndOutput(middle, "middle", middleSize);
+    sortAndOutput(end, "end", endSize);
 
     systemPause();
     clearScreen();
 
     binarySearchSetup();
+
+    delete [] control;
+    delete [] early;
+    delete [] middle;
+    delete [] end;
 
     return 0;
 }

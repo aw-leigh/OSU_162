@@ -13,11 +13,13 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-void readFileIntoVector(vector<int> &vector, string filename)
+int readFileIntoArray(int * &array, string filename)
 {
     std::ifstream inputFile;
+    string tempString;
+    string tempChar;
     int number;
-    string temp;
+    
 
     inputFile.open(filename);
     if (!inputFile)  //Displays an error if the file isn't openable.
@@ -26,146 +28,100 @@ void readFileIntoVector(vector<int> &vector, string filename)
     }
     else
     {
-        while(inputFile.good()) //read through to the end of the file
+        while(inputFile.good())
         {
-            getline(inputFile, temp, '\n');  //reads number in as a string
-            number = stoi(temp);  //converts string to int
-            vector.push_back(number);
+            std::getline(inputFile, tempString);  //copy whole file into string
+        }
+
+        std::string::iterator end_pos = std::remove(tempString.begin(), tempString.end(), ' ');
+        tempString.erase(end_pos, tempString.end());  //remove spaces from string. Reference: https://stackoverflow.com/a/83481
+        array = new int[tempString.size()];  //creates new array the size of the string
+
+        for (int i = 0; i < tempString.size(); i++)
+        {
+            tempChar = tempString[i];
+            array[i] = stoi(tempChar);
         }
     }
     inputFile.close();
+
+    return tempString.size();
 }
 
-void simpleSearch(vector<int> &control, vector<int> &early, vector<int> &middle, vector<int> &end)
+void simpleSearch(int * &array, string filename, int arrayLength, int searchValue)
 {
-    int searchValue;
     bool found = false;
 
-    cout << "Simple Search: Enter an integer value to search for: ";
-    searchValue = validateInt();
-    cout << endl;
-
-    for (int i=0; i < control.size(); i++){  //search control
-        if(control[i] == searchValue){
+    for (int i=0; i < arrayLength; i++){  //search
+        if(array[i] == searchValue){
             found = true;
         }
     }
     if(found == true){
-        cout << "control.txt: target value found" << endl;
-        found = false;
+        cout << filename << ".txt: target value found" << endl;
     }
     else{
-        cout << "control.txt: target value not found" << endl;
+        cout << filename << ".txt: target value not found" << endl;
     }
-
-    for (int i=0; i < early.size(); i++){  //search early
-        if(early[i] == searchValue){
-            found = true;
-        }
-    }
-    if(found == true){
-        cout << "early.txt: target value found" << endl;
-        found = false;
-    }
-    else{
-        cout << "early.txt: target value not found" << endl;
-    }
-
-    for (int i=0; i < middle.size(); i++){  //search middle
-        if(middle[i] == searchValue){
-            found = true;
-        }
-    }
-    if(found == true){
-        cout << "middle.txt: target value found" << endl;
-        found = false;
-    }
-    else{
-        cout << "middle.txt: target value not found" << endl;
-    }
-
-    for (int i=0; i < end.size(); i++){  //search end
-        if(end[i] == searchValue){
-            found = true;
-        }
-    }
-    if(found == true){
-        cout << "end.txt: target value found" << endl;
-        found = false;
-    }
-    else{
-        cout << "end.txt: target value not found" << endl;
-    }   
 }
 
-void sortAndOutput(vector<int> &control, vector<int> &early, vector<int> &middle, vector<int> &end)
+void sortAndOutput(int * &array, string arrayName, int arrayLength)
 {
-    bubbleSort(control);
-    writeVectorIntoFile(control, "control");
-    printVectorContents(control, "control");
-
-    bubbleSort(early);
-    writeVectorIntoFile(early, "early");
-    printVectorContents(early, "early");
-
-    bubbleSort(middle);
-    writeVectorIntoFile(middle, "middle");
-    printVectorContents(middle, "middle");
-
-    bubbleSort(end);
-    writeVectorIntoFile(end, "end");
-    printVectorContents(end, "end");
+    bubbleSort(array, arrayLength);
+    writeArrayToFile(array, arrayName, arrayLength);
+    printArrayContents(array, arrayName, arrayLength);
 }
 
-void bubbleSort(vector<int> &vector)  //citation: textbook pg. 614
+void bubbleSort(int * &array, int arrayLength)  //citation: textbook pg. 614
 {
     bool swapped;
     do {
         swapped = false;
-        for (int i = 0; i < vector.size() - 1; i++)
+        for (int i = 0; i < arrayLength - 1; i++)
         {
-            if (vector[i] > vector[i+1])
+            if (array[i] > array[i+1])
             {
-                std::swap(vector[i], vector[i+1]);
+                std::swap(array[i], array[i+1]);
                 swapped = true;
             }
         }
     } while (swapped);
 }
 
-void printVectorContents(vector<int> const &vector, string vectorName)
+void printArrayContents(int * const &array, string arrayName, int arrayLength)
 {
-    cout << "Contents of " << vectorName << ":" << endl;
-    for (int i = 0; i < vector.size(); i++)
+    cout << "Contents of " << arrayName << ":" << endl;
+    for (int i = 0; i < arrayLength; i++)
     {
-        cout << ' ' << vector[i];
+        cout << ' ' << array[i];
     }
     cout << endl << endl;
 }
 
-void writeVectorIntoFile(vector<int> &vector, string vectorName)
+void writeArrayToFile(int * const &array, std::string arrayName, int arrayLength)
 {
     std::ofstream outputFile;
     string outputFileName;
 
-    std::cout << "Please enter name of file to output sorted " << vectorName << ": ";
+    std::cout << "Please enter name of file to output sorted " << arrayName << ": ";
     cin >> outputFileName;
     appendTXT(outputFileName);
 
     outputFile.open(outputFileName);
-    for(int i = 0; i < vector.size(); i++)
+    for(int i = 0; i < arrayLength; i++)
     {
-        outputFile  << vector[i];
-        if(i < vector.size() - 1)  //this adds a newline after every person except for the last one, which prevents creating empty lines
+        outputFile  << array[i];
+        if(i < arrayLength - 1)  //this adds a newline after every person except for the last one, which prevents creating empty lines
         {
-            outputFile << '\n';
+            outputFile << ' ';
         }
     }
 }
 
 void binarySearchSetup()
 {
-    vector<int> searchVector;
+    int * tempArray;
+    int tempArrayLength = 0;
     string filename;
     int searchValue;
     bool found = false;
@@ -181,9 +137,9 @@ void binarySearchSetup()
         cin >> filename;
         appendTXT(filename);
 
-        readFileIntoVector(searchVector, filename);
+        tempArrayLength = readFileIntoArray(tempArray, filename);
 
-        if(binarySearch(searchVector, 0, searchVector.size(), searchValue) == -1)
+        if(binarySearch(tempArray, 0, tempArrayLength, searchValue) == -1)
         {
             cout << filename << ": target value not found" << endl << endl;
         }
@@ -192,28 +148,28 @@ void binarySearchSetup()
             cout << filename << ": target value found" << endl << endl;
         }
         count++;
-        searchVector.clear();
+        delete [] tempArray;
     }
 }
 
-int binarySearch(vector<int> searchVector, int left, int right, int searchValue) //https://www.geeksforgeeks.org/binary-search/
+int binarySearch(int * &array, int left, int right, int searchValue) //https://www.geeksforgeeks.org/binary-search/
 { 
     if (right >= left) { 
         int mid = left + (right - left) / 2; 
   
         // If the element is present at the middle 
         // itself 
-        if (searchVector[mid] == searchValue) 
+        if (array[mid] == searchValue) 
             return mid; 
   
         // If element is smaller than mid, then 
         // it can only be present in left subarray 
-        if (searchVector[mid] > searchValue) 
-            return binarySearch(searchVector, left, mid - 1, searchValue); 
+        if (array[mid] > searchValue) 
+            return binarySearch(array, left, mid - 1, searchValue); 
   
         // Else the element can only be present 
         // in right subarray 
-        return binarySearch(searchVector, mid + 1, right, searchValue); 
+        return binarySearch(array, mid + 1, right, searchValue); 
     } 
   
     // We reach here when element is not 
