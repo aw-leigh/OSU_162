@@ -22,26 +22,28 @@ int readFileIntoArray(int * &array, string filename)
     
 
     inputFile.open(filename);
-    if (!inputFile)  //Displays an error if the file isn't openable.
+    while(!inputFile.is_open())
     {
-        std::cout << "Could not access file, check filename and try again" << std::endl;
+        std::cout << "Error. Please reenter filename: ";
+        std::cin >> filename;
+        appendTXT(filename);
+        std::cin.ignore();
+        inputFile.open(filename);
     }
-    else
+    
+    while(inputFile.good())
     {
-        while(inputFile.good())
-        {
-            std::getline(inputFile, tempString);  //copy whole file into string
-        }
+        std::getline(inputFile, tempString);  //copy whole file into string
+    }
 
-        std::string::iterator end_pos = std::remove(tempString.begin(), tempString.end(), ' ');
-        tempString.erase(end_pos, tempString.end());  //remove spaces from string. Reference: https://stackoverflow.com/a/83481
-        array = new int[tempString.size()];  //creates new array the size of the string
+    std::string::iterator end_pos = std::remove(tempString.begin(), tempString.end(), ' ');
+    tempString.erase(end_pos, tempString.end());  //remove spaces from string. Reference: https://stackoverflow.com/a/83481
+    array = new int[tempString.size()];  //creates new array the size of the string
 
-        for (int i = 0; i < tempString.size(); i++)
-        {
-            tempChar = tempString[i];
-            array[i] = stoi(tempChar);
-        }
+    for (int i = 0; i < tempString.size(); i++)
+    {
+        tempChar = tempString[i];
+        array[i] = stoi(tempChar);
     }
     inputFile.close();
 
@@ -120,6 +122,7 @@ void writeArrayToFile(int * const &array, std::string arrayName, int arrayLength
 
 void binarySearchSetup()
 {
+    std::ifstream inputFile;
     int * tempArray;
     int tempArrayLength = 0;
     string filename;
@@ -137,6 +140,18 @@ void binarySearchSetup()
         cin >> filename;
         appendTXT(filename);
 
+        inputFile.open(filename);
+	
+        //test if file can't open, get different file if so
+        while(!inputFile.is_open())
+        {
+            std::cout << "Error. Please reenter filename: ";
+            std::cin >> filename;
+            appendTXT(filename);
+            std::cin.ignore();
+            inputFile.open(filename);
+	    }
+
         tempArrayLength = readFileIntoArray(tempArray, filename);
 
         if(binarySearch(tempArray, 0, tempArrayLength, searchValue) == -1)
@@ -148,6 +163,7 @@ void binarySearchSetup()
             cout << filename << ": target value found" << endl << endl;
         }
         count++;
+        inputFile.close();
         delete [] tempArray;
     }
 }
