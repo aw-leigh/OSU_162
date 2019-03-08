@@ -26,6 +26,11 @@ Player::Player(Terrain * space)
 
 Player::~Player() {}
 
+void Player::addToInventory(Item * item) 
+{
+    this->inventory.push_back(item);
+}
+
 /*
 void Player::updateFOW(Terrain*** &gameBoard)
 {

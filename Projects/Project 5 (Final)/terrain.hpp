@@ -49,7 +49,7 @@ class Terrain
         virtual void print();
         virtual void updatePointers(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard);
         virtual void setFOW(bool in);
-        virtual void updateFOW(Terrain*** &gameBoard);
+        virtual void updateFOW(int rows, int cols, Terrain*** &gameBoard);
 };
 
 #endif

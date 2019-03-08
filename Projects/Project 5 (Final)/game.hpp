@@ -31,6 +31,7 @@ class Game
 
         //Functions
         void runGame();
+        void move(Terrain* destination);
         void printBoard();
         void setPlayerPtr(Terrain* in);
         //void printGameInfo();

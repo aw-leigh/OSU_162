@@ -44,8 +44,18 @@ Normal::~Normal() {}
 //Moves to space
 void Normal::interact(Terrain * in)
 {
-    in->setContents(this->contents); //point new space to player
-    this->contents = nullptr;
+    if(in->getContents() != nullptr)
+    {
+        if(in->getContents()->getName() == "Rocket")
+        {
+        //code to check if enough parts to fix rocket
+        }
+    }
+    else
+    {    
+        in->setContents(this->contents); //point new space to player
+        this->contents = nullptr;
+    }
 }
 
 //Grey if unfound, blank if found
@@ -62,6 +72,9 @@ void Normal::print()
         }
         else if(this->contents->getName() == "Rocket"){
             std::cout << Color::FG_MAGENTA << 'R' << Color::FG_DEFAULT;
+        }
+        else if(this->contents->getName() == "Rocket part"){
+            std::cout << Color::FG_MAGENTA << 'r' << Color::FG_DEFAULT;
         }
     }
     else  //if it's empty, print blank

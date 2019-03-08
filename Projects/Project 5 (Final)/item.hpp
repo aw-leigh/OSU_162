@@ -23,6 +23,7 @@ class Item
         Item(Terrain * space);
         virtual ~Item() {};
         virtual std::string getName();
+        virtual void addToInventory(Item *) {};
 };
 
 #endif

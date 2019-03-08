@@ -13,6 +13,7 @@
 #include "normal.hpp"
 #include "player.hpp"
 #include "rocket.hpp"
+#include "rocketpart.hpp"
 
 //constructor. Initializes the board
 Game::Game(int rows, int cols)
@@ -56,6 +57,8 @@ Game::Game(int rows, int cols)
     //create the player on the 2nd bottom row, in the middle
     gameBoard[rows-2][cols/2]->setContents(new Player());
     playerPtr = gameBoard[rows-2][cols/2];
+
+    playerPtr->getLeft()->setContents(new Rocketpart()); //put rocket part next to player for testing 
 }
 
 //constructor. Initializes the board
@@ -77,7 +80,7 @@ Game::~Game()
 //prints the board
 void Game::printBoard()
 {
-    playerPtr->updateFOW(gameBoard);
+    playerPtr->updateFOW(this->numRows, this->numCols, this->gameBoard);
     //Top border
     std::cout.width(numCols + 2);
     std::cout.fill('-');
@@ -121,12 +124,10 @@ void Game::runGame()
             {
                 case 1: 
                 {
-                    if(playerPtr->getUp() == nullptr)
-                    {
-                        std::cout << "You can't move any further in this direction!";
+                    if(playerPtr->getUp() == nullptr){
+                        std::cout << "You can't move any further in this direction!" << std::endl;
                     }
-                    else
-                    {
+                    else{
                         playerPtr->interact(playerPtr->getUp());
                         playerPtr = playerPtr->getUp();
                         moved = true;
@@ -134,40 +135,31 @@ void Game::runGame()
                 } break;
                 case 2:
                 {
-                    if(playerPtr->getLeft() == nullptr)
-                    {
-                        std::cout << "You can't move any further in this direction!";
+                    if(playerPtr->getLeft() == nullptr){
+                        std::cout << "You can't move any further in this direction!" << std::endl;
                     }
-                    else
-                    {
-                        playerPtr->interact(playerPtr->getLeft());
-                        playerPtr = playerPtr->getLeft();
+                    else{
+                        move(playerPtr->getLeft());
                         moved = true;
                     }
                 } break;
                 case 3:
                 {
-                    if(playerPtr->getDown() == nullptr)
-                    {
-                        std::cout << "You can't move any further in this direction!";
+                    if(playerPtr->getDown() == nullptr){
+                        std::cout << "You can't move any further in this direction!" << std::endl;
                     }
-                    else
-                    {
-                        playerPtr->interact(playerPtr->getDown());
-                        playerPtr = playerPtr->getDown();
+                    else{
+                        move(playerPtr->getDown());
                         moved = true;
                     }
                 } break;
                 case 4:
                 {
-                    if(playerPtr->getRight() == nullptr)
-                    {
-                        std::cout << "You can't move any further in this direction!";
+                    if(playerPtr->getRight() == nullptr){
+                        std::cout << "You can't move any further in this direction!" << std::endl;
                     }
-                    else
-                    {
-                        playerPtr->interact(playerPtr->getRight());
-                        playerPtr = playerPtr->getRight();
+                    else{
+                        move(playerPtr->getRight());
                         moved = true;
                     }
                 } break;
@@ -183,4 +175,19 @@ void Game::runGame()
         //decrement time remaining until lava
             //if 0, lava, and reset timer
     }
+}
+
+void Game::move(Terrain* destination)
+{
+    if(destination->getContents() != nullptr)
+    {
+        if(destination->getContents()->getName() == "Rocket part") //add to player inventory
+        {
+            playerPtr->getContents()->addToInventory(destination->getContents());
+            destination->setContents(nullptr);
+            std::cout << "You found a rocket part!" << std::endl;
+        }
+    }
+    playerPtr->interact(destination);
+    playerPtr = destination;
 }

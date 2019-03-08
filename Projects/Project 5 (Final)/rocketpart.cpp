@@ -2,24 +2,23 @@
 ** Program name: Final.cpp
 ** Author:       Andrew Wilson
 ** Date:         Mar 11, 2019
-** Description:  This is the "rocket" item specification file for the final project
+** Description:  This is the "rocketpart" item specification file for the final project
 **               Inheirits from object class 
 **
-**               Name: Rocket
+**               Name: rocketpart
 **               Initially hidden: no
 ***************************************************************/
 
 #include "item.hpp"
-#include "rocket.hpp"
+#include "rocketpart.hpp"
 
 //Default constructor.
-Rocket::Rocket()
+Rocketpart::Rocketpart()
 {
-    this->name = "Rocket";
+    this->name = "Rocket part";
 }
-Rocket::Rocket(Terrain * space)
+Rocketpart::Rocketpart(Terrain * space)
 {
-    this->name = "Rocket";
+    this->name = "Rocket part";
 }
-
-Rocket::~Rocket() {}
+Rocketpart::~Rocketpart() {}

@@ -164,13 +164,17 @@ void Terrain::setFOW(bool in)
     this->fogOfWar = in;
 }
 
-void Terrain::updateFOW(Terrain*** &gameBoard)
+void Terrain::updateFOW(int maxRow, int maxCol, Terrain*** &gameBoard)
 {
     for(int i = -1; i < 2; i++)
     {
         for(int j = -1; j < 2; j++)
         {
-            gameBoard[this->row + i][this->col + j]->setFOW(false);
+            //don't dereference null pointers
+            if(this->row + i < maxRow && this->row + i >= 0 && this->col + j < maxCol && this->col + j >= 0)
+            {
+                gameBoard[this->row + i][this->col + j]->setFOW(false);
+            }
         }
     }
 }
