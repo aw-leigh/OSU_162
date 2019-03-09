@@ -26,6 +26,7 @@ class Terrain
         int col;
         bool fogOfWar;
         bool isLava = false;
+        bool isNormal = false;
         int travelTime;
 
     public:
@@ -40,6 +41,8 @@ class Terrain
         virtual Terrain * getRight();
         virtual Item * getContents();
         virtual bool getIsLava();
+        virtual bool getIsNormal();
+        virtual int getTravelTime();
         virtual void setUp(Terrain * in);
         virtual void setDown(Terrain * in);
         virtual void setLeft(Terrain * in);
@@ -47,11 +50,11 @@ class Terrain
         virtual void setContents(Item * in);
 
         virtual void deleteTerrain(int maxRows, int maxCols);
-        virtual bool interact(Terrain * playerSpace) = 0;
+        virtual bool interact(Terrain * playerSpace, int maxRows, int maxCols, Terrain*** &gameBoard) = 0;
         virtual void print();
         virtual void updatePointers(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard);
         virtual void setFOW(bool in);
-        virtual void updateFOW(int rows, int cols, Terrain*** &gameBoard);
+        virtual void updateFOW(int maxRow, int maxCol, Terrain*** &gameBoard);
 };
 
 #endif

@@ -150,7 +150,15 @@ Item * Terrain::getContents()
 }
 bool Terrain::getIsLava()
 {
-    return isLava;
+    return this->isLava;
+}
+bool Terrain::getIsNormal()
+{
+    return this->isNormal;
+}
+int Terrain::getTravelTime()
+{
+    return this->travelTime;
 }
 void Terrain::setUp(Terrain * in)
 {

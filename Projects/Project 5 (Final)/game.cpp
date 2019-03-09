@@ -12,11 +12,12 @@
 #include "terrain.hpp"
 #include "normal.hpp"
 #include "lava.hpp"
+#include "mountain.hpp"
 #include "player.hpp"
 #include "rocket.hpp"
 #include "rocketpart.hpp"
 
-const int LAVA_FREQUENCY = 10;
+const int LAVA_FREQUENCY = 12;
 const int NUM_ROCKET_PARTS = 6;
 
 //constructor. Initializes the board
@@ -60,6 +61,12 @@ Game::Game(int rows, int cols)
     gameBoard[rows-2][cols/2]->setContents(new Player());
     playerPtr = gameBoard[rows-2][cols/2];
 
+    addMountain(rows-3, cols/2);
+
+    //uncomment below to test new terrain next to player
+    //delete gameBoard[rows-2][cols/2 - 1];
+    //gameBoard[rows-2][cols/2 - 1] = new Mountain(rows-2, cols/2 - 1, rows, cols, gameBoard);
+
     //add items here
     for (int i = 0; i < NUM_ROCKET_PARTS; i++)
     {
@@ -69,6 +76,13 @@ Game::Game(int rows, int cols)
     }
 
     //add other terrain types here
+    for (int i = 0; i < (rows*cols)/25; i++) //4% mountain
+    {
+        //mountains can't spawn on outside edge, only in rows 1-(numRows-2)
+        while (!addMountain((rand() % (this->numRows - 2)) + 1, (rand() % (this->numCols - 2)) + 1));
+    }
+
+
     /*
     for(int i = 0; i < 21; i++){
         delete gameBoard[rows-1][i]; //delete the old terrain
@@ -175,7 +189,7 @@ bool Game::runGame()
                         std::cout << "You can't move any further in this direction!" << std::endl;
                     }
                     else{
-                        moved = move(playerPtr->getUp());
+                        moved = move(playerPtr->getUp(), this->numRows, this->numCols, gameBoard);
                     }
                 } break;
                 case 2:
@@ -184,7 +198,7 @@ bool Game::runGame()
                         std::cout << "You can't move any further in this direction!" << std::endl;
                     }
                     else{
-                        moved = move(playerPtr->getLeft());
+                        moved = move(playerPtr->getLeft(), this->numRows, this->numCols, gameBoard);
                     }
                 } break;
                 case 3:
@@ -193,7 +207,7 @@ bool Game::runGame()
                         std::cout << "You can't move any further in this direction!" << std::endl;
                     }
                     else{
-                        moved = move(playerPtr->getDown());
+                        moved = move(playerPtr->getDown(), this->numRows, this->numCols, gameBoard);
                     }
                 } break;
                 case 4:
@@ -202,15 +216,14 @@ bool Game::runGame()
                         std::cout << "You can't move any further in this direction!" << std::endl;
                     }
                     else{
-                        moved = move(playerPtr->getRight());
+                        moved = move(playerPtr->getRight(), this->numRows, this->numCols, gameBoard);
                     }
                 } break;
             }
         }while(!moved);
 
-        lavaCalc();    
-        //decrement time remaining until lava
-            //if 0, lava, and reset timer
+        //decrement time remaining until lava. if >= 0, lava, and reset timer
+        lavaCalc(playerPtr->getTravelTime());
 
         //check if player is on lava or at 0 HP
         if(playerPtr->getIsLava() || playerPtr->getContents()->getHP() < 1)
@@ -228,7 +241,7 @@ bool Game::runGame()
     }
 }
 
-bool Game::move(Terrain* destination)
+bool Game::move(Terrain* destination, int maxRows, int maxCols, Terrain*** &gameBoard)
 {
     //clearScreen();
     if(destination->getContents() != nullptr)
@@ -254,7 +267,7 @@ bool Game::move(Terrain* destination)
             }
         }        
     }
-    if(destination->interact(playerPtr)) //if interation was succesful, update player pointer
+    if(destination->interact(playerPtr, maxRows, maxCols, gameBoard)) //if interation was succesful, update player pointer
     {
         playerPtr = destination;
         return true;
@@ -312,8 +325,25 @@ bool Game::addLava(int row, int col)
             gameBoard[row][col]->setContents(nullptr);
         }
     }
-    delete gameBoard[row][col]; //delete the old terrain
-    gameBoard[row][col] = new Lava(row, col, this->numRows, this->numCols, gameBoard);  //replace it with lava
-    gameBoard[row][col]->updatePointers(row, col, this->numRows, this->numCols, gameBoard);  //fix pointers
+    delete gameBoard[row][col];  //delete the old terrain, add lava, update pointers
+    gameBoard[row][col] = new Lava(row, col, this->numRows, this->numCols, gameBoard);
+    gameBoard[row][col]->updatePointers(row, col, this->numRows, this->numCols, gameBoard);
     return true;
+}
+
+bool Game::addMountain(int row, int col)
+{
+    //if the space holds an item or if it's non-normal terrain
+    if(gameBoard[row][col]->getContents() != nullptr || !gameBoard[row][col]->getIsNormal())
+    {
+        return false;
+    }
+    else
+    {
+        delete gameBoard[row][col];  //delete the old terrain, add a mountain, update pointers
+        gameBoard[row][col] = new Mountain(row, col, this->numRows, this->numCols, gameBoard); 
+        gameBoard[row][col]->updatePointers(row, col, this->numRows, this->numCols, gameBoard);
+        //gameBoard[row][col]->setFOW(false);  uncomment to see where they are; for testing
+        return true;
+    }
 }

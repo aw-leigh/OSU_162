@@ -25,6 +25,7 @@ class Game
         bool playerWin;
         Terrain* playerPtr = nullptr;
         Terrain* rocketPtr = nullptr;
+        friend class Mountain;
     public:
         //Constructors and Deconstructor
         Game(int rows, int cols);
@@ -32,13 +33,14 @@ class Game
 
         //Functions
         bool runGame();
-        bool move(Terrain* destination);
+        bool move(Terrain* destination, int maxRows, int maxCols, Terrain*** &gameBoard);
         void printBoard();
         void setPlayerPtr(Terrain* in);
         void lavaCalc(int input = 1);
-        //void printGameInfo();
         bool addRocketPart(int row, int col);
         bool addLava(int row, int col);
+        bool addMountain(int row, int col);
+        
 };
 
 #endif  //Game

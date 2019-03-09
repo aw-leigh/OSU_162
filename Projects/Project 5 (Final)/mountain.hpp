@@ -2,29 +2,32 @@
 ** Program name: Final.cpp
 ** Author:       Andrew Wilson
 ** Date:         Mar 11, 2019
-** Description:  This is the "lava" terrain specification file for the final project
+** Description:  This is the "mountain" terrain specification file for the final project
 **               Inheirits from terrain class 
 **
-**               Travel time: 1
+**               Travel time: 2
 **               Initially hidden: yes
-**               Interaction: death
+**               Interaction: climb
 ***************************************************************/
 
-#ifndef LAVA_HPP
-#define LAVA_HPP
+#ifndef MOUNTAIN_HPP
+#define MOUNTAIN_HPP
 
 #include "terrain.hpp"
+#include "game.hpp"
 
-class Lava : public Terrain
+class Game; //forward declaration
+
+class Mountain : public Terrain
 {
     protected:
 
     public:
-        Lava();
-        Lava(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard);
-        virtual ~Lava();
+        Mountain();
+        Mountain(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard);
+        virtual ~Mountain();
         virtual bool interact(Terrain * in, int maxRows, int maxCols, Terrain*** &gameBoard);
         virtual void print();
 };
 
-#endif  //Lava
+#endif  //Mountain

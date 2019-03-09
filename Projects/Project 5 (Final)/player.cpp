@@ -26,7 +26,14 @@ Player::Player(Terrain * space)
     this->HP = 15;
 }
 
-Player::~Player() {}
+Player::~Player()
+{
+    while(!inventory.empty()) //delete objects in inventory
+    {
+        delete inventory.back();
+        inventory.pop_back();
+    }
+}
 
 void Player::addToInventory(Item * item) 
 {

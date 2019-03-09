@@ -18,6 +18,7 @@ Normal::Normal()
 {
     this->fogOfWar = true;
     this->travelTime = 1;
+    this->isNormal = true;
 }
 
 //Constructor. Called only on board construction, updates only its pointers.
@@ -27,6 +28,7 @@ Normal::Normal(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard
     this->col = col;
     this->fogOfWar = true;
     this->travelTime = 1;
+    this->isNormal = true;
 }
 
 //Constructor. Called on creation of terrain after initialization, updates its and its neighbor's pointers. Normal terrain takes 1 time to traverse and is hidden by default
@@ -36,13 +38,14 @@ Normal::Normal(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard
     this->col = col;
     this->fogOfWar = true;
     this->travelTime = 1;
+    this->isNormal = true;
 }
 
 //Destructor.
 Normal::~Normal() {}
 
 //Moves to space
-bool Normal::interact(Terrain * playerSpace)
+bool Normal::interact(Terrain * playerSpace, int maxRows, int maxCols, Terrain*** &gameBoard)
 {
     this->setContents(playerSpace->getContents());  //point new space to player
     playerSpace->setContents(nullptr);
