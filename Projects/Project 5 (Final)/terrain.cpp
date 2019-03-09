@@ -76,6 +76,15 @@ Terrain::Terrain(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoa
     }    
 }
 
+Terrain::~Terrain()
+{
+    if(this->contents != nullptr) //if it contains something, delete it. This should delete all items (incl. player)
+    {
+        delete this->contents;
+        this->contents = nullptr;
+    }
+}
+
 void Terrain::deleteTerrain(int maxRows, int maxCols)
 {
     if(row != 0){  //unless we're in the top row, set the above space's down pointer to null

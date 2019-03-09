@@ -24,7 +24,7 @@ class Normal : public Terrain
         Normal(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard, int number);
         Normal(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard);
         virtual ~Normal();
-        virtual void interact(Terrain * in);
+        virtual bool interact(Terrain * in);
         virtual void print();
 };
 

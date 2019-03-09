@@ -42,20 +42,10 @@ Normal::Normal(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard
 Normal::~Normal() {}
 
 //Moves to space
-void Normal::interact(Terrain * in)
+bool Normal::interact(Terrain * in)
 {
-    if(in->getContents() != nullptr)
-    {
-        if(in->getContents()->getName() == "Rocket")
-        {
-        //code to check if enough parts to fix rocket
-        }
-    }
-    else
-    {    
-        in->setContents(this->contents); //point new space to player
-        this->contents = nullptr;
-    }
+    in->setContents(this->contents); //point new space to player
+    this->contents = nullptr;
 }
 
 //Grey if unfound, blank if found

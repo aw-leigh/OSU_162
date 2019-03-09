@@ -31,11 +31,12 @@ class Game
 
         //Functions
         void runGame();
-        void move(Terrain* destination);
+        bool move(Terrain* destination);
         void printBoard();
         void setPlayerPtr(Terrain* in);
+        void lavaCalc(int input = 1);
         //void printGameInfo();
-        //bool addAnt(int, int);
+        bool addRocketPart(int row, int col);
         //bool addDoodlebug(int, int);
 };
 

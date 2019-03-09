@@ -31,7 +31,7 @@ class Terrain
         Terrain() {};
         Terrain(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard, int number);
         Terrain(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard);
-        virtual ~Terrain() {};
+        virtual ~Terrain();
 
         virtual Terrain * getUp();
         virtual Terrain * getDown();
@@ -45,7 +45,7 @@ class Terrain
         virtual void setContents(Item * in);
 
         virtual void deleteTerrain(int maxRows, int maxCols);
-        virtual void interact(Terrain * in) = 0;
+        virtual bool interact(Terrain * in) = 0;
         virtual void print();
         virtual void updatePointers(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard);
         virtual void setFOW(bool in);

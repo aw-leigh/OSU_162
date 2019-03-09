@@ -15,6 +15,9 @@
 #include "rocket.hpp"
 #include "rocketpart.hpp"
 
+const int LAVA_FREQUENCY = 15;
+const int NUM_ROCKET_PARTS = 6;
+
 //constructor. Initializes the board
 Game::Game(int rows, int cols)
 {
@@ -22,7 +25,7 @@ Game::Game(int rows, int cols)
     this->numCols = cols;
     this->playerDeath = false;
     this->playerWin = false;
-    this->lavaTimer = 50;
+    this->lavaTimer = LAVA_FREQUENCY;
 
     //create the board
     gameBoard = new Terrain**[this->numRows];
@@ -39,8 +42,7 @@ Game::Game(int rows, int cols)
             gameBoard[i][j] = new Normal(i, j, rows, cols, gameBoard, 1);
         }
     }
-
-    //fix all the pointers because I can't figure out how to do it in one go
+    //fix all the pointers because I can't figure out how to do it in one go; now everything is doubly pointing to its neighbours.
     for(int i = 0; i < this->numRows; i++)
     {
         for(int j = 0; j < this->numCols; j++)
@@ -53,12 +55,22 @@ Game::Game(int rows, int cols)
     gameBoard[0][cols/2]->setContents(new Rocket());
     gameBoard[0][cols/2]->setFOW(false);
 
-
     //create the player on the 2nd bottom row, in the middle
     gameBoard[rows-2][cols/2]->setContents(new Player());
     playerPtr = gameBoard[rows-2][cols/2];
 
+    //add items here
     playerPtr->getLeft()->setContents(new Rocketpart()); //put rocket part next to player for testing 
+
+    for (int i = 0; i < NUM_ROCKET_PARTS; i++)
+    {
+        //The While-loop picks a random row/col, attempts to place a rocket part
+        //if unsuccessful pick two more random row/col until success
+        while (!addRocketPart(rand() % this->numRows, rand() % this->numCols));
+    }
+
+    //add other terrain types here
+
 }
 
 //constructor. Initializes the board
@@ -118,7 +130,7 @@ void Game::runGame()
         do{
             //choose direction
             std::cout << "Choose a direction to move (1 = Up  2 = Left  3 = Down  4 = Right): ";
-            std::cin >> direction;
+            direction = validateInt(1, 4);
             
             switch(direction)
             {
@@ -128,9 +140,7 @@ void Game::runGame()
                         std::cout << "You can't move any further in this direction!" << std::endl;
                     }
                     else{
-                        playerPtr->interact(playerPtr->getUp());
-                        playerPtr = playerPtr->getUp();
-                        moved = true;
+                        moved = move(playerPtr->getUp());
                     }
                 } break;
                 case 2:
@@ -139,8 +149,7 @@ void Game::runGame()
                         std::cout << "You can't move any further in this direction!" << std::endl;
                     }
                     else{
-                        move(playerPtr->getLeft());
-                        moved = true;
+                        moved = move(playerPtr->getLeft());
                     }
                 } break;
                 case 3:
@@ -149,8 +158,7 @@ void Game::runGame()
                         std::cout << "You can't move any further in this direction!" << std::endl;
                     }
                     else{
-                        move(playerPtr->getDown());
-                        moved = true;
+                        moved = move(playerPtr->getDown());
                     }
                 } break;
                 case 4:
@@ -159,35 +167,62 @@ void Game::runGame()
                         std::cout << "You can't move any further in this direction!" << std::endl;
                     }
                     else{
-                        move(playerPtr->getRight());
-                        moved = true;
+                        moved = move(playerPtr->getRight());
                     }
                 } break;
             }
         }while(!moved);
-            
-            //player interaction
-            //player move
-                //move "player" item into new spot "contents"
-                //remove "player" item from old spot "contents"
-                //update player pointer
-        
+
+        lavaCalc();    
+        playerWin = true;    
         //decrement time remaining until lava
             //if 0, lava, and reset timer
     }
 }
 
-void Game::move(Terrain* destination)
+bool Game::move(Terrain* destination)
 {
+    //clearScreen();
     if(destination->getContents() != nullptr)
     {
-        if(destination->getContents()->getName() == "Rocket part") //add to player inventory
+        if(destination->getContents()->getName() == "Rocket part") //add part to player inventory
         {
             playerPtr->getContents()->addToInventory(destination->getContents());
             destination->setContents(nullptr);
             std::cout << "You found a rocket part!" << std::endl;
         }
     }
-    playerPtr->interact(destination);
-    playerPtr = destination;
+    if(playerPtr->interact(destination)) //if interation was succesful, update player pointer
+    {
+        playerPtr = destination;
+        return true;
+    }
+    else //if interaction was not successful, kick them back to the direction choice switch
+    {
+        return false;
+    }
+}
+
+void Game::lavaCalc(int input)
+{
+    this->lavaTimer -= input;
+    if(this->lavaTimer <= 0)
+    {
+        //do lava stuff
+        this->lavaTimer += LAVA_FREQUENCY;
+    }
+    std::cout << this->lavaTimer << std::endl;
+}
+
+bool Game::addRocketPart(int row, int col)
+{
+    if (gameBoard[row][col]->getContents() == nullptr) //if the space doesn't have an item already
+    {
+        gameBoard[row][col]->setContents(new Rocketpart()); //put rocket part there
+        return true;
+    }
+    else  //if the board spot is already filled, return false
+    {
+        return false;
+    }
 }
