@@ -148,6 +148,10 @@ Item * Terrain::getContents()
 {
     return this->contents;
 }
+bool Terrain::getIsLava()
+{
+    return isLava;
+}
 void Terrain::setUp(Terrain * in)
 {
     this->up = in;

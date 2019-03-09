@@ -17,7 +17,15 @@ int main()
     clearScreen();
     titleTest();
     Game game(21, 21);
-    game.runGame();
+    if(game.runGame()) //returns true if player wins, false if player dies
+    {
+        std::cout << "You win!";
+    }
+    else
+    {
+        std::cout << "You died!";
+    }
+    
 
     return 0;
 }

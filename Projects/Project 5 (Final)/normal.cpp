@@ -42,10 +42,12 @@ Normal::Normal(int row, int col, int maxRows, int maxCols, Terrain*** &gameBoard
 Normal::~Normal() {}
 
 //Moves to space
-bool Normal::interact(Terrain * in)
+bool Normal::interact(Terrain * playerSpace)
 {
-    in->setContents(this->contents); //point new space to player
-    this->contents = nullptr;
+    this->setContents(playerSpace->getContents());  //point new space to player
+    playerSpace->setContents(nullptr);
+    
+    return true;
 }
 
 //Grey if unfound, blank if found

@@ -11,11 +11,12 @@
 #include "validation.hpp"
 #include "terrain.hpp"
 #include "normal.hpp"
+#include "lava.hpp"
 #include "player.hpp"
 #include "rocket.hpp"
 #include "rocketpart.hpp"
 
-const int LAVA_FREQUENCY = 15;
+const int LAVA_FREQUENCY = 10;
 const int NUM_ROCKET_PARTS = 6;
 
 //constructor. Initializes the board
@@ -60,17 +61,21 @@ Game::Game(int rows, int cols)
     playerPtr = gameBoard[rows-2][cols/2];
 
     //add items here
-    playerPtr->getLeft()->setContents(new Rocketpart()); //put rocket part next to player for testing 
-
     for (int i = 0; i < NUM_ROCKET_PARTS; i++)
     {
         //The While-loop picks a random row/col, attempts to place a rocket part
-        //if unsuccessful pick two more random row/col until success
+        //if unsuccessful pick another random row/col until success
         while (!addRocketPart(rand() % this->numRows, rand() % this->numCols));
     }
 
     //add other terrain types here
-
+    /*
+    for(int i = 0; i < 21; i++){
+        delete gameBoard[rows-1][i]; //delete the old terrain
+        gameBoard[rows-1][i] = new Lava(rows-1, i, this->numRows, this->numCols, gameBoard);  //replace it with lava
+        gameBoard[rows-1][i]->setFOW(false); //set it to visible, for testing
+        gameBoard[rows-1][i]->updatePointers(row, col, this->numRows, this->numCols, gameBoard);
+    }*/
 }
 
 //constructor. Initializes the board
@@ -92,7 +97,9 @@ Game::~Game()
 //prints the board
 void Game::printBoard()
 {
+    //reveal terrain adjacent to player
     playerPtr->updateFOW(this->numRows, this->numCols, this->gameBoard);
+
     //Top border
     std::cout.width(numCols + 2);
     std::cout.fill('-');
@@ -101,12 +108,39 @@ void Game::printBoard()
 
     for(int i = 0; i < numRows; i++)
     {
-        std::cout << "|";
+        //if there are 3 or fewer turns before lava, print the border bars yellow -> light red -> red as a warning
+        if(this->lavaTimer == 3 && i == (this->numRows - this->lavaCounter)){ 
+            std::cout << Color::FG_YELLOW << "|" << Color::FG_DEFAULT;
+        }
+        else if(this->lavaTimer == 2 && i == (this->numRows - this->lavaCounter)){ 
+            std::cout << Color::FG_LIGHT_RED << "|" << Color::FG_DEFAULT;
+        }
+        else if(this->lavaTimer == 1 && i == (this->numRows - this->lavaCounter)){ 
+            std::cout << Color::FG_RED << "|" << Color::FG_DEFAULT;
+        }
+        else{
+            std::cout << "|";
+        }
+
+        //print the board
         for(int j = 0; j < numCols; j++)
         {
             gameBoard[i][j]->print();
         }
-        std::cout << "|\n";
+
+        //if there are 3 or fewer turns before lava, print border side bars yellow -> light red -> red as a warning
+        if(this->lavaTimer == 3 && i == (this->numRows - this->lavaCounter)){ 
+            std::cout << Color::FG_YELLOW << "|\n" << Color::FG_DEFAULT;
+        }
+        else if(this->lavaTimer == 2 && i == (this->numRows - this->lavaCounter)){ 
+            std::cout << Color::FG_LIGHT_RED << "|\n" << Color::FG_DEFAULT;
+        }
+        else if(this->lavaTimer == 1 && i == (this->numRows - this->lavaCounter)){ 
+            std::cout << Color::FG_RED << "|\n" << Color::FG_DEFAULT;
+        }        
+        else{
+            std::cout << "|\n";
+        }
     }
 
     //Bottom border
@@ -117,13 +151,14 @@ void Game::printBoard()
 }
 
 //prints the board
-void Game::runGame()
+bool Game::runGame()
 {
     while(!this->playerDeath && !this->playerWin)  //loop until player wins or dies
     {
         int direction;
         bool moved = false;
         //print instructions/controls/timer etc here
+        std::cout << this->lavaTimer << std::endl;
         printBoard();
 
         //Player interact/move
@@ -174,9 +209,22 @@ void Game::runGame()
         }while(!moved);
 
         lavaCalc();    
-        playerWin = true;    
         //decrement time remaining until lava
             //if 0, lava, and reset timer
+
+        //check if player is on lava or at 0 HP
+        if(playerPtr->getIsLava() || playerPtr->getContents()->getHP() < 1)
+        {
+            playerDeath = true;
+        }
+    }
+    if(playerDeath)
+    {
+        return false;
+    }
+    if(playerWin)
+    {
+        return true;
     }
 }
 
@@ -191,8 +239,22 @@ bool Game::move(Terrain* destination)
             destination->setContents(nullptr);
             std::cout << "You found a rocket part!" << std::endl;
         }
+        else if(destination->getContents()->getName() == "Rocket") //check if player has 5 rocket parts
+        {
+            if(playerPtr->getContents()->countRocketParts() >= 5) //player has enough parts to win
+            {
+                playerWin = true;
+                return true;
+            }
+            else
+            {
+                std::cout << "You need " << Color::FG_MAGENTA << 5 - playerPtr->getContents()->countRocketParts() 
+                          << Color::FG_DEFAULT <<" more parts to repair your rocket!" << std::endl;
+                return false;
+            }
+        }        
     }
-    if(playerPtr->interact(destination)) //if interation was succesful, update player pointer
+    if(destination->interact(playerPtr)) //if interation was succesful, update player pointer
     {
         playerPtr = destination;
         return true;
@@ -208,10 +270,19 @@ void Game::lavaCalc(int input)
     this->lavaTimer -= input;
     if(this->lavaTimer <= 0)
     {
-        //do lava stuff
+        for(int i = 0; i < this->numCols; i++)
+        {
+            addLava(this->numRows - this->lavaCounter, i);
+            gameBoard[this->numRows - this->lavaCounter][i]->setFOW(false);
+        }
+        for(int i = 0; i < this->numCols; i++) //fix the pointers...
+        {
+            gameBoard[this->numRows - this->lavaCounter][i]->updatePointers(this->numRows - this->lavaCounter, i, this->numRows, this->numCols, gameBoard);
+        }
+        //change row - lavaCounter to lava panels
         this->lavaTimer += LAVA_FREQUENCY;
+        this->lavaCounter++;
     }
-    std::cout << this->lavaTimer << std::endl;
 }
 
 bool Game::addRocketPart(int row, int col)
@@ -225,4 +296,24 @@ bool Game::addRocketPart(int row, int col)
     {
         return false;
     }
+}
+
+bool Game::addLava(int row, int col)
+{
+    if (gameBoard[row][col]->getContents() != nullptr) //if the space has an item,
+    {
+        if(gameBoard[row][col]->getContents()->getName() == "Player") //if it's the player, kill him
+        {
+            this->playerDeath = true;
+        }
+        else //if it's anything besides the player, delete it
+        {
+            delete gameBoard[row][col]->getContents();
+            gameBoard[row][col]->setContents(nullptr);
+        }
+    }
+    delete gameBoard[row][col]; //delete the old terrain
+    gameBoard[row][col] = new Lava(row, col, this->numRows, this->numCols, gameBoard);  //replace it with lava
+    gameBoard[row][col]->updatePointers(row, col, this->numRows, this->numCols, gameBoard);  //fix pointers
+    return true;
 }

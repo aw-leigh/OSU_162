@@ -22,8 +22,13 @@ class Item
         Item();
         Item(Terrain * space);
         virtual ~Item() {};
+
         virtual std::string getName();
+
         virtual void addToInventory(Item *) {};
+        virtual int countRocketParts() {};
+        virtual void setHP(int damage) {};
+        virtual int getHP() {};
 };
 
 #endif

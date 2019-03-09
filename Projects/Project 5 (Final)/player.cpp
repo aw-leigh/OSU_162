@@ -17,11 +17,13 @@
 Player::Player()
 {
     this->name = "Player";
+    this->HP = 15;
 }
 
 Player::Player(Terrain * space)
 {
     this->name = "Player";
+    this->HP = 15;
 }
 
 Player::~Player() {}
@@ -31,15 +33,27 @@ void Player::addToInventory(Item * item)
     this->inventory.push_back(item);
 }
 
-/*
-void Player::updateFOW(Terrain*** &gameBoard)
+void Player::setHP(int damage) 
 {
-    for(int i = -1; i < 2; i++)
+    this->HP -= damage;
+}
+
+int Player::getHP()
+{
+    return this->HP;
+}
+
+int Player::countRocketParts()
+{
+    int counter = 0;
+    
+    //look through player's inventory for "Rocket part"s.
+    for(auto i : inventory)
     {
-        for(int j = -1; j < 2; j++)
+        if(i->getName() == "Rocket part")
         {
-            gameBoard[this->row + i][this->col + j]->setFOW(false);
+            counter++;
         }
     }
+    return counter;
 }
-*/

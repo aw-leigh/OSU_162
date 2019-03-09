@@ -20,6 +20,7 @@ class Game
         int numRows;
         int numCols;
         int lavaTimer;
+        int lavaCounter = 1;
         bool playerDeath;
         bool playerWin;
         Terrain* playerPtr = nullptr;
@@ -30,14 +31,14 @@ class Game
         virtual ~Game();
 
         //Functions
-        void runGame();
+        bool runGame();
         bool move(Terrain* destination);
         void printBoard();
         void setPlayerPtr(Terrain* in);
         void lavaCalc(int input = 1);
         //void printGameInfo();
         bool addRocketPart(int row, int col);
-        //bool addDoodlebug(int, int);
+        bool addLava(int row, int col);
 };
 
 #endif  //Game

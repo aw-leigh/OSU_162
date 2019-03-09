@@ -19,12 +19,16 @@
 class Player : public Item
 {
     protected:
+        int HP;
         std::list<Item *> inventory;
     public:
         Player();
         Player(Terrain * space);
         virtual ~Player();
         void addToInventory(Item *);
+        int countRocketParts();
+        void setHP(int damage);
+        int getHP();
 };
 
 #endif  //Player
