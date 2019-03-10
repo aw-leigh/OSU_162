@@ -27,7 +27,8 @@ class Player : public Item
         virtual ~Player();
         void addToInventory(Item *);
         int countRocketParts();
-        void setHP(int damage);
+        void setHP(int HP);
+        void damageHP(int damage);
         int getHP();
 };
 

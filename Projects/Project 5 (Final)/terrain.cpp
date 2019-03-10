@@ -6,7 +6,6 @@
 **               All spaces on the board inheirit from this virtual class 
 ***************************************************************/
 #include <iostream>
-
 #include "terrain.hpp"
 
 //Constructor. Called on creation of terrain after initialization, updates its and its neighbor's pointers. 

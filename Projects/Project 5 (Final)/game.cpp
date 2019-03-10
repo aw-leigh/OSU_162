@@ -13,6 +13,8 @@
 #include "normal.hpp"
 #include "lava.hpp"
 #include "mountain.hpp"
+#include "hotspring.hpp"
+#include "spikes.hpp"
 #include "player.hpp"
 #include "rocket.hpp"
 #include "rocketpart.hpp"
@@ -61,7 +63,7 @@ Game::Game(int rows, int cols)
     gameBoard[rows-2][cols/2]->setContents(new Player());
     playerPtr = gameBoard[rows-2][cols/2];
 
-    addMountain(rows-3, cols/2);
+    addSpikes(rows-3, cols/2);
 
     //uncomment below to test new terrain next to player
     //delete gameBoard[rows-2][cols/2 - 1];
@@ -80,6 +82,16 @@ Game::Game(int rows, int cols)
     {
         //mountains can't spawn on outside edge, only in rows 1-(numRows-2)
         while (!addMountain((rand() % (this->numRows - 2)) + 1, (rand() % (this->numCols - 2)) + 1));
+    }
+    
+    for (int i = 0; i < (rows*cols)/20; i++) //5% spikes
+    {
+        while (!addSpikes(rand() % this->numRows, rand() % this->numCols));
+    }
+    
+    for (int i = 0; i < (rows*cols)/50; i++) //2% springs
+    {
+        while (!addHotSpring(rand() % this->numRows, rand() % this->numCols));
     }
 
 
@@ -111,6 +123,43 @@ Game::~Game()
 //prints the board
 void Game::printBoard()
 {
+    //print lava timer health, yellow if 3, light red if 2, red if 1
+    std::cout << "Remaining turns until lava flood: ";
+    if(this->lavaTimer > 3)
+    {
+        std::cout << this->lavaTimer << std::endl;
+    }
+    if(this->lavaTimer == 3)
+    {
+        std::cout << Color::FG_YELLOW << this->lavaTimer << Color::FG_DEFAULT << std::endl;
+    }
+    else if(this->lavaTimer == 2)
+    {
+        std::cout << Color::FG_LIGHT_RED << this->lavaTimer << Color::FG_DEFAULT << std::endl;
+    }
+    else if(this->lavaTimer <= 1)
+    {
+        std::cout << Color::FG_RED << this->lavaTimer << Color::FG_DEFAULT << std::endl;
+    }
+
+    //print player health, yellow if 6-10, red if 1-5
+    if(playerPtr->getContents()->getHP() <= 5)
+    {
+        std::cout << "HP: " << Color::FG_LIGHT_RED << playerPtr->getContents()->getHP() << Color::FG_DEFAULT << "/15" << std::endl;
+    }
+    else if(playerPtr->getContents()->getHP() <= 10)
+    {
+        std::cout << "HP: " << Color::FG_YELLOW << playerPtr->getContents()->getHP() << Color::FG_DEFAULT << "/15" << std::endl;
+    }
+    else
+    {
+        std::cout << "HP: " << playerPtr->getContents()->getHP() << "/15" << std::endl;
+    }
+
+    //print rocket parts held
+    std::cout << "Rocket parts: " << playerPtr->getContents()->countRocketParts() << "/5" << std::endl;
+
+    
     //reveal terrain adjacent to player
     playerPtr->updateFOW(this->numRows, this->numCols, this->gameBoard);
 
@@ -171,8 +220,6 @@ bool Game::runGame()
     {
         int direction;
         bool moved = false;
-        //print instructions/controls/timer etc here
-        std::cout << this->lavaTimer << std::endl;
         printBoard();
 
         //Player interact/move
@@ -342,6 +389,40 @@ bool Game::addMountain(int row, int col)
     {
         delete gameBoard[row][col];  //delete the old terrain, add a mountain, update pointers
         gameBoard[row][col] = new Mountain(row, col, this->numRows, this->numCols, gameBoard); 
+        gameBoard[row][col]->updatePointers(row, col, this->numRows, this->numCols, gameBoard);
+        //gameBoard[row][col]->setFOW(false);  uncomment to see where they are; for testing
+        return true;
+    }
+}
+
+bool Game::addHotSpring(int row, int col)
+{
+    //if the space holds an item or if it's non-normal terrain
+    if(gameBoard[row][col]->getContents() != nullptr || !gameBoard[row][col]->getIsNormal())
+    {
+        return false;
+    }
+    else
+    {
+        delete gameBoard[row][col];  //delete the old terrain, add a mountain, update pointers
+        gameBoard[row][col] = new HotSpring(row, col, this->numRows, this->numCols, gameBoard); 
+        gameBoard[row][col]->updatePointers(row, col, this->numRows, this->numCols, gameBoard);
+        //gameBoard[row][col]->setFOW(false);  uncomment to see where they are; for testing
+        return true;
+    }
+}
+
+bool Game::addSpikes(int row, int col)
+{
+    //if the space holds an item or if it's non-normal terrain
+    if(gameBoard[row][col]->getContents() != nullptr || !gameBoard[row][col]->getIsNormal())
+    {
+        return false;
+    }
+    else
+    {
+        delete gameBoard[row][col];  //delete the old terrain, add a mountain, update pointers
+        gameBoard[row][col] = new Spikes(row, col, this->numRows, this->numCols, gameBoard); 
         gameBoard[row][col]->updatePointers(row, col, this->numRows, this->numCols, gameBoard);
         //gameBoard[row][col]->setFOW(false);  uncomment to see where they are; for testing
         return true;

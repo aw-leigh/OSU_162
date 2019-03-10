@@ -39,7 +39,8 @@ class Game
         bool addRocketPart(int row, int col);
         bool addLava(int row, int col);
         bool addMountain(int row, int col);
-        
+        bool addHotSpring(int row, int col);
+        bool addSpikes(int row, int col);        
 };
 
 #endif  //Game

@@ -40,7 +40,12 @@ void Player::addToInventory(Item * item)
     this->inventory.push_back(item);
 }
 
-void Player::setHP(int damage) 
+void Player::setHP(int HP) 
+{
+    this->HP = HP;
+}
+
+void Player::damageHP(int damage) 
 {
     this->HP -= damage;
 }

@@ -27,7 +27,8 @@ class Item
 
         virtual void addToInventory(Item *) {};
         virtual int countRocketParts() {};
-        virtual void setHP(int damage) {};
+        virtual void setHP(int HP) {};
+        virtual void damageHP(int damage) {};
         virtual int getHP() {};
 };
 
