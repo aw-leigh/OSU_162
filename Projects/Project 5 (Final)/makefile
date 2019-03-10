@@ -5,8 +5,11 @@ PROJECT = Final_Project_Wilson_Andrew
 BIN = Escape
 
 #automatically includes all cpp files in directory
-SOURCES = $(wildcard *.cpp)
-OBJECTS = $(SOURCES:%.cpp=%.o)
+SRCEXT = cpp
+SOURCES = $(wildcard *.$(SRCEXT))
+OBJECTS = $(SOURCES:%.$(SRCEXT)=$(OBJ)/%.o)
+
+OBJ=./obj
 
 #generates dependencies automatically, adopted from https://stackoverflow.com/a/21086223
 CXX = g++
@@ -14,7 +17,12 @@ CXXFLAGS = -std=c++11 -MD -MP -g
 $(BIN): $(OBJECTS)
 	${CXX} ${CXXFLAGS} -o $@ $^
 
--include $(SOURCES:%.cpp=%.d)
+#this puts all object files into their own directory, adpoted from https://codereview.stackexchange.com/questions/74136/makefile-that-places-object-files-into-an-alternate-directory-bin
+$(OBJECTS): $(OBJ)/%.o: %.$(SRCEXT)
+	@mkdir -p $(@D)
+	${CXX} ${CXXFLAGS} -c -o $@ $<
+
+-include $(SOURCES:%.$(SRCEXT)=%.d)
 
 #allows memory leak checking with "make valgrind"
 .PHONY : valgrind
@@ -30,10 +38,10 @@ zip:
 #ifeq ($(OS),Windows_NT)
 #    RM = cmd /C del /Q /F
 #else
-    RM = rm -f
+    RM = rm -rf
 #endif
 
 #removes binary, .d (dependency), .o files
 .PHONY : clean
 clean:
-	$(RM) $(BIN) $(BIN).exe *.d *.o
+	$(RM) $(BIN) $(BIN).exe $(OBJ)

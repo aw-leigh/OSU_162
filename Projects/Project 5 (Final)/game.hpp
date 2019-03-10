@@ -25,7 +25,6 @@ class Game
         bool playerWin;
         Terrain* playerPtr = nullptr;
         Terrain* rocketPtr = nullptr;
-        friend class Mountain;
     public:
         //Constructors and Deconstructor
         Game(int rows, int cols);
