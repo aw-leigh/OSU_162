@@ -30,12 +30,12 @@ Player::~Player()
         inventory.pop_back();
     }
 }
-
+//adds to inventory and returns true if player has 4 or less parts in possession, false if 5 or more
 bool Player::addToInventory(Item * item) 
 {
     if(countRocketParts() > 4)
     {
-        std::cout << "You already have enough rocket parts!";
+        std::cout << "You already have enough rocket parts! Get to your ship!\n";
         return false;
     }
     else

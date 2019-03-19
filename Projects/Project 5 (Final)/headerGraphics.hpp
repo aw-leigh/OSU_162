@@ -5,11 +5,8 @@
 ** Description:  This is the specification file for ASCII graphics the final project
 ***************************************************************/
 
-//Prints title text
+//Prints title text and instructions
 void titleScreen();
-
-//prints instructions
-void instructions();
 
 //Prints win screen
 void youWin();

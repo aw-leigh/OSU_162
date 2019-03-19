@@ -15,7 +15,6 @@ int main()
 {
     srand(time(NULL));
     titleScreen();
-    instructions();
     
     Game game(21, 21);
     if(game.runGame()) //returns true if player wins, false if player dies

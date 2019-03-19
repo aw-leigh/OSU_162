@@ -152,8 +152,15 @@ void Game::printBoard()
         std::cout << "HP: " << playerPtr->getContents()->getHP() << "/15" << std::endl;
     }
 
-    //print rocket parts held
-    std::cout << "Rocket parts: " << playerPtr->getContents()->countRocketParts() << "/5" << std::endl;
+    //print rocket parts held in default color if 0-4
+    if(playerPtr->getContents()->countRocketParts() < 5)
+    {
+        std::cout << "Rocket parts: " << playerPtr->getContents()->countRocketParts() << "/5" << std::endl;
+    }
+    else  //print magenta if 5/5
+    {
+        std::cout << "Rocket parts: " << Color::FG_MAGENTA << playerPtr->getContents()->countRocketParts() << "/5" << Color::FG_DEFAULT  << std::endl;
+    }
 
     
     //reveal terrain adjacent to player
@@ -291,9 +298,16 @@ bool Game::move(Terrain* destination, int maxRows, int maxCols, Terrain*** &game
     {
         if(destination->getContents()->getName() == "Rocket part") //add part to player inventory
         {
-            playerPtr->getContents()->addToInventory(destination->getContents());
-            destination->setContents(nullptr);
-            std::cout << "You found a rocket part!" << std::endl;
+            //pick it up, if player has 4 or fewer in inventory
+            if(playerPtr->getContents()->addToInventory(destination->getContents()))
+            {
+                destination->setContents(nullptr);
+                std::cout << "You found a rocket part!" << std::endl;
+            }
+            else //player limited to 5 rocket parts
+            {
+                return false;
+            }
         }
         else if(destination->getContents()->getName() == "Rocket") //check if player has 5 rocket parts
         {

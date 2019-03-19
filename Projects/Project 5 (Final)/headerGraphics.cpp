@@ -28,18 +28,15 @@ ______           _        _     _____
                                                   |_| 
 
 )~";
-}
-
-void instructions()
-{
     std::cout << "Your spaceship has crashed on a volcanically active planet!\n"
               << "You must collect 5 rocket pieces (" << Color::FG_MAGENTA << "r" << Color::FG_DEFAULT << ") "
               << "and make your way to your rocket (" << Color::FG_MAGENTA << "R" << Color::FG_DEFAULT << ")\n"
-              << "before the whole planet erupts!\n\n"
-              << "Mountains (" << Color::FG_DARK_GRAY << 'M' << Color::FG_DEFAULT << ") will reveal spaces farther away than normal, but take time to climb!\n"
+              << "before the whole planet floods with lava!\n\n"
+              << "Mountains (" << Color::FG_DARK_GRAY << 'M' << Color::FG_DEFAULT << ") will reveal far spaces, but take time to climb!\n"
               << "If you step on spikes (" << Color::FG_DARK_GRAY << '+' << Color::FG_DEFAULT << ") "
-              << "be sure to take a dip in a hot spring (" << Color::BG_BLUE << Color::FG_CYAN << char(177)
+              << "take a dip in a hot spring (" << Color::BG_BLUE << Color::FG_CYAN << char(177)
               << Color::BG_DEFAULT << Color::FG_DEFAULT << ") to heal yourself!\n\n"
+              << "Game info is printed above the map, resize the console so you can see it!\n"
               << "Press Enter to play! Good luck!!!";
     std::cin.get();
 }
