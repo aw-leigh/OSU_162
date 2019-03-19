@@ -65,10 +65,6 @@ Game::Game(int rows, int cols)
 
     addSpikes(rows-3, cols/2);
 
-    //uncomment below to test new terrain next to player
-    //delete gameBoard[rows-2][cols/2 - 1];
-    //gameBoard[rows-2][cols/2 - 1] = new Mountain(rows-2, cols/2 - 1, rows, cols, gameBoard);
-
     //add items here
     for (int i = 0; i < NUM_ROCKET_PARTS; i++)
     {
@@ -171,7 +167,7 @@ void Game::printBoard()
 
     for(int i = 0; i < numRows; i++)
     {
-        //if there are 3 or fewer turns before lava, print the border bars yellow -> light red -> red as a warning
+        //if there are 3 or fewer turns before lava, print the border left side bars yellow -> light red -> red as a warning
         if(this->lavaTimer == 3 && i == (this->numRows - this->lavaCounter)){ 
             std::cout << Color::FG_YELLOW << "|" << Color::FG_DEFAULT;
         }
@@ -191,7 +187,7 @@ void Game::printBoard()
             gameBoard[i][j]->print();
         }
 
-        //if there are 3 or fewer turns before lava, print border side bars yellow -> light red -> red as a warning
+        //if there are 3 or fewer turns before lava, print border right side bars yellow -> light red -> red as a warning
         if(this->lavaTimer == 3 && i == (this->numRows - this->lavaCounter)){ 
             std::cout << Color::FG_YELLOW << "|\n" << Color::FG_DEFAULT;
         }

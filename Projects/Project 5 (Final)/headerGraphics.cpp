@@ -10,9 +10,12 @@
 #include <iostream>
 #include <string>
 #include "headerGraphics.hpp"
+#include "validation.hpp"
+#include "color.hpp"
 
-void titleTest()
+void titleScreen()
 {
+    clearScreen();
     std::cout << R"~(
 
 ______           _        _     _____                         
@@ -22,7 +25,49 @@ ______           _        _     _____
 | |\ \ (_) | (__|   <  __/ |_  | |__\__ \ (_| (_| | |_) |  __/
 \_| \_\___/ \___|_|\_\___|\__| \____/___/\___\__,_| .__/ \___|
                                                   | |         
-                                                  |_|         
-)~";
+                                                  |_| 
 
+)~";
+}
+
+void instructions()
+{
+    std::cout << "Your spaceship has crashed on a volcanically active planet!\n"
+              << "You must collect 5 rocket pieces (" << Color::FG_MAGENTA << "r" << Color::FG_DEFAULT << ") "
+              << "and make your way to your rocket (" << Color::FG_MAGENTA << "R" << Color::FG_DEFAULT << ")\n"
+              << "before the whole planet erupts!\n\n"
+              << "Mountains (" << Color::FG_DARK_GRAY << 'M' << Color::FG_DEFAULT << ") will reveal spaces farther away than normal, but take time to climb!\n"
+              << "If you step on spikes (" << Color::FG_DARK_GRAY << '+' << Color::FG_DEFAULT << ") "
+              << "be sure to take a dip in a hot spring (" << Color::BG_BLUE << Color::FG_CYAN << char(177)
+              << Color::BG_DEFAULT << Color::FG_DEFAULT << ") to heal yourself!\n\n"
+              << "Press Enter to play! Good luck!!!";
+    std::cin.get();
+}
+
+void youWin()
+{
+    clearScreen();
+    std::cout << R"~(
+__   __                     _         _   _   _ 
+\ \ / /                    (_)       | | | | | |
+ \ V /___  _   _  __      ___ _ __   | | | | | |
+  \ // _ \| | | | \ \ /\ / / | '_ \  | | | | | |
+  | | (_) | |_| |  \ V  V /| | | | | |_| |_| |_|
+  \_/\___/ \__,_|   \_/\_/ |_|_| |_| (_) (_) (_)
+
+)~";    
+}
+
+void youLose()
+{
+    clearScreen();
+    std::cout << R"~(
+__   __            _                            
+\ \ / /           | |                           
+ \ V /___  _   _  | | ___  ___  ___             
+  \ // _ \| | | | | |/ _ \/ __|/ _ \            
+  | | (_) | |_| | | | (_) \__ \  __/  _   _   _
+  \_/\___/ \__,_| |_|\___/|___/\___| (_) (_) (_)
+
+)~";    
 }

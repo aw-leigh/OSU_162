@@ -3,11 +3,7 @@
 ** Author:       Andrew Wilson
 ** Date:         Mar 11, 2019
 ** Description:  This is the "player" item specification file for the final project
-**               Inheirits from ite, class 
-**
-**               Travel time: ~
-**               Initially hidden: no
-**               Interaction: none
+**               Inheirits from item class 
 ***************************************************************/
 
 #include "item.hpp"
@@ -35,9 +31,18 @@ Player::~Player()
     }
 }
 
-void Player::addToInventory(Item * item) 
+bool Player::addToInventory(Item * item) 
 {
-    this->inventory.push_back(item);
+    if(countRocketParts() > 4)
+    {
+        std::cout << "You already have enough rocket parts!";
+        return false;
+    }
+    else
+    {
+        this->inventory.push_back(item);
+        return true;
+    }
 }
 
 void Player::setHP(int HP) 

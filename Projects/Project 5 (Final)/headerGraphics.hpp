@@ -6,4 +6,13 @@
 ***************************************************************/
 
 //Prints title text
-void titleTest();
+void titleScreen();
+
+//prints instructions
+void instructions();
+
+//Prints win screen
+void youWin();
+
+//Prints lose screen
+void youLose();

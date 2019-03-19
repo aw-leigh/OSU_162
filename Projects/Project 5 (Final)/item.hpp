@@ -25,7 +25,7 @@ class Item
 
         virtual std::string getName();
 
-        virtual void addToInventory(Item *) {};
+        virtual bool addToInventory(Item *) {};
         virtual int countRocketParts() {};
         virtual void setHP(int HP) {};
         virtual void damageHP(int damage) {};

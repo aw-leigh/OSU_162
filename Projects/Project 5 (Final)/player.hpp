@@ -25,7 +25,7 @@ class Player : public Item
         Player();
         Player(Terrain * space);
         virtual ~Player();
-        void addToInventory(Item *);
+        bool addToInventory(Item *);
         int countRocketParts();
         void setHP(int HP);
         void damageHP(int damage);
